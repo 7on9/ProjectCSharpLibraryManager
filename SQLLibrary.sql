@@ -1,4 +1,4 @@
-USE master
+﻿USE master
 GO
 DROP DATABASE LIBRARY
 GO 
@@ -6,7 +6,10 @@ CREATE DATABASE LIBRARY
 GO
 USE LIBRARY
 GO
-
+CREATE TABLE ACCOUNT(
+		USER_NAME VARCHAR(40) PRIMARY KEY, 
+		PASSWORD VARCHAR(100),
+)
 CREATE TABLE STUDENT(
 		ID VARCHAR(15) PRIMARY KEY,
 		NAME NVARCHAR(50) NOT NULL,
@@ -54,3 +57,34 @@ FOREIGN KEY (ID) REFERENCES BORROW(ID);
 ALTER TABLE BORROW_DETAIL
 ADD CONSTRAINT FK_BOOKBORROW
 FOREIGN KEY (SERIAL) REFERENCES BOOK(SERIAL) ON UPDATE CASCADE;
+
+----------------------------------------------------------------------------------------------------------------------BOOK----------------------------------------------------------------------------------------------------------------------------------------------------------------
+--SELECT * FROM BOOK
+
+--INSERT INTO BOOK VALUES('FN01', N'Quốc gia khởi nghiệp', 'Daniel *& Saul Singer', 'AlphaBooks ', 1, Null, 'STARTUP, YOUNG,')
+
+--DROP PROC DBO.INSERT_BOOK
+CREATE PROC PROC_INSERT_BOOK @SERIAL VARCHAR(15), @NAME NVARCHAR(50), @AUTHOR NVARCHAR(50), @PUBLISH_HOUSE NVARCHAR(50), @QUANTUM INT, @IMG IMAGE, @TAG VARCHAR(300), @LOI INT OUTPUT
+AS
+BEGIN TRY
+	INSERT INTO BOOK VALUES(@SERIAL, @NAME, @AUTHOR,@PUBLISH_HOUSE, @QUANTUM, @IMG, @TAG)
+END TRY
+BEGIN CATCH
+	SET @LOI = @@ERROR
+	RETURN
+END CATCH
+SET @LOI = @@ERROR
+
+--EXEC DBO.PROC_INSERT_BOOK 'FN03', N'Quốc gia khởi nghiệp', 'Daniel *& Saul Singer', 'AlphaBooks ', 1, Null, 'STARTUP, YOUNG,',@ERR---==--
+--SELECT @ERR
+--END
+--DROP FUNCTION FUNCTION_BOOK_WITH_TAG
+CREATE FUNCTION DBO.FUNCTION_BOOK_WITH_TAG (@TAG VARCHAR(15))
+RETURNS TABLE
+AS
+RETURN 
+	SELECT * FROM BOOK WHERE TAG LIKE (CONCAT('%',@TAG,'%'))
+
+--SELECT * FROM FUNCTION_BOOK_WITH_TAG('EEE')
+--EXEC dbo.INSERT_BOOK 'FN02', N'Quốc gia khởi nghiệp', 'Daniel *& Saul Singer', 'AlphaBooks ', 1, Null, 'STARTUP, YOUNG,'
+----------------------------------------------------------------------------------------------------------------------BOOK----------------------------------------------------------------------------------------------------------------------------------------------------------------

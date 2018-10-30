@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Library_Manager
 {
-    class DatabaseConnection
+    public class DatabaseConnection
     {
         SqlConnection sqlConn; //Doi tuong ket noi CSDL
         SqlDataAdapter da;//Bo dieu phoi du lieu
-        DataSet ds; //Doi tuong chhua CSDL khi giao tiep
+        DataTable dt; //Doi tuong chhua CSDL khi giao tiep
         public DatabaseConnection()
         {
             string strCnn = global::Library_Manager.Properties.Settings.Default.LIBRARYConnectionString;
@@ -24,23 +24,23 @@ namespace Library_Manager
             {
                 sqlConn.Open();
                 sqlConn.Close();
+                sqlConn.Open();
             }
             catch (SqlException)
             {
                 return false;
             }
-
             return true;
         }
         //Phuong thuc de thuc hien cau lenh strSQL truy vân du lieu
         public DataTable Execute(string sqlStr)
         {
             da = new SqlDataAdapter(sqlStr, sqlConn);
-            ds = new DataSet();
-            da.Fill(ds);
-            return ds.Tables[0];
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
         }
-        //Phuong thuc de thuc hien cac lenh Them, Xoa, Sua
+        ////Phuong thuc de thuc hien cac lenh Them, Xoa, Sua
         public void ExecuteNonQuery(string strSQL)
         {
             SqlCommand sqlcmd = new SqlCommand(strSQL, sqlConn);

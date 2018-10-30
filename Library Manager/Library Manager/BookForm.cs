@@ -17,5 +17,20 @@ namespace Library_Manager
         {
             InitializeComponent();
         }
+
+        private void tìmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timeSystem_Tick(object sender, EventArgs e)
+        {
+            lblTimeSys.Text = DateTime.Now.ToLongTimeString();
+        }
+
+        private void BookForm_Load(object sender, EventArgs e)
+        {
+            lblAccount.Text = StaticValue.ACCOUNT;
+        }
     }
 }

@@ -26,23 +26,32 @@ namespace Library_Manager
         private void LoginForm_Load(object sender, EventArgs e)
         {
             txtUserName.Select();
+            StaticValue.DATABASECONNECTION = new DatabaseConnection();
+            if (StaticValue.DATABASECONNECTION.verifyConnection())
+                MessageBox.Show("Kết nối thành công đến database!", "Thông báo!");
+            else MessageBox.Show("Không thể kết nối database!", "Thông báo!");
         }
 
-        DatabaseConnection databaseConnection;
         private void btnLogin_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            databaseConnection = new DatabaseConnection();
-            if (databaseConnection.verifyConnection())
-                MessageBox.Show("Kết nối thành công đến database!");
-            else MessageBox.Show("Không thể kết nối database!");
-            Cursor.Current = Cursors.Default;
+            
+            if (SysAccount.LoginAccount(txtUserName.Text, txtPassword.Text))
+            {
+                MessageBox.Show("Tài khoản " + StaticValue.ACCOUNT + " đã đăng nhập thành công!", "Thành công!");
+            
+                Cursor.Current = Cursors.Default;
 
-            this.Hide();
-            RouterForm router = new RouterForm();
-            router.ShowDialog();
-            //router.Activate();
-            this.Close();
+                this.Hide();
+                RouterForm router = new RouterForm();
+                router.ShowDialog();
+                //router.Activate();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!");
+            }
         }
 
         private void VerifyInput_TextChanged(object sender, EventArgs e)
@@ -57,6 +66,14 @@ namespace Library_Manager
                     textBox.SelectionLength = 0;
                 }
             }
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            if(SysAccount.CreateAccount(txtUserName.Text, txtPassword.Text))
+                MessageBox.Show("Tạo tài khoản thành công","Thành công!");
+            else
+                MessageBox.Show("Tạo tài khoản thất bại", "Thành công!");
         }
     }
 }

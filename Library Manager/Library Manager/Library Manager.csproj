@@ -104,6 +104,7 @@
     <Compile Include="LibraryManagerForm.Designer.cs">
       <DependentUpon>LibraryManagerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SysAccount.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,7 +120,7 @@
     <Compile Include="RouterForm.Designer.cs">
       <DependentUpon>RouterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utility.cs" />
+    <Compile Include="StaticValue.cs" />
     <EmbeddedResource Include="BookForm.resx">
       <DependentUpon>BookForm.cs</DependentUpon>
     </EmbeddedResource>

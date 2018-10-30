@@ -7,8 +7,8 @@ GO
 USE LIBRARY
 GO
 CREATE TABLE ACCOUNT(
-		USER_NAME VARCHAR(40) PRIMARY KEY, 
-		PASSWORD VARCHAR(100),
+		USER_NAME VARCHAR(65) PRIMARY KEY, 
+		PASSWORD VARCHAR(65),
 )
 CREATE TABLE STUDENT(
 		ID VARCHAR(15) PRIMARY KEY,
@@ -58,28 +58,62 @@ ALTER TABLE BORROW_DETAIL
 ADD CONSTRAINT FK_BOOKBORROW
 FOREIGN KEY (SERIAL) REFERENCES BOOK(SERIAL) ON UPDATE CASCADE;
 
+
+----------------------------------------------------------------------------------------------------------------------ACCOUNT----------------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE PROC PROC_INSERT_ACCOUNT @USER_NAME VARCHAR(65), @PASSWORD VARCHAR(65), @SUCC INT OUTPUT
+AS
+	BEGIN TRY
+		INSERT INTO ACCOUNT VALUES (@USER_NAME, @PASSWORD)
+		SET @SUCC = @@ROWCOUNT
+	END TRY
+	BEGIN CATCH
+		SET @SUCC = @@ROWCOUNT
+	RETURN
+	END CATCH
+
+DECLARE @SUCC INT 
+EXEC PROC_INSERT_ACCOUNT 'SSSS','SSSSS',@SUCC OUTPUT
+SELECT STR(@SUCC, 10)
+
+EXEC PROC_INSERT_ACCOUNT(
+UPDATE ACCOUNT 
+	SET USER_NAME = 'TAMDAULONG207', PASSWORD = '1'
+	WHERE USER_NAME = 'LONG'
+
+SELECT * FROM ACCOUNT
+DELETE FROM ACCOUNT WHERE 1=1
+
+CREATE FUNCTION DBO.FUNCTION_LOGIN_ACCOUNT(@USER_NAME VARCHAR(65), @PASSWORD VARCHAR(65))
+RETURNS TABLE
+AS
+RETURN
+	SELECT USER_NAME FROM ACCOUNT WHERE USER_NAME = @USER_NAME AND PASSWORD = @PASSWORD
+SELECT * FROM FUNCTION_LOGIN_ACCOUNT('TAMDAULONG207','1')
+----------------------------------------------------------------------------------------------------------------------ACCOUNT----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ----------------------------------------------------------------------------------------------------------------------BOOK----------------------------------------------------------------------------------------------------------------------------------------------------------------
 --SELECT * FROM BOOK
 
 --INSERT INTO BOOK VALUES('FN01', N'Quốc gia khởi nghiệp', 'Daniel *& Saul Singer', 'AlphaBooks ', 1, Null, 'STARTUP, YOUNG,')
 
---DROP PROC DBO.INSERT_BOOK
+--DROP PROC DBO.PROC_INSERT_BOOK
 CREATE PROC PROC_INSERT_BOOK @SERIAL VARCHAR(15), @NAME NVARCHAR(50), @AUTHOR NVARCHAR(50), @PUBLISH_HOUSE NVARCHAR(50), @QUANTUM INT, @IMG IMAGE, @TAG VARCHAR(300), @LOI INT OUTPUT
 AS
 BEGIN TRY
 	INSERT INTO BOOK VALUES(@SERIAL, @NAME, @AUTHOR,@PUBLISH_HOUSE, @QUANTUM, @IMG, @TAG)
+	SET @LOI = @@ROWCOUNT
 END TRY
 BEGIN CATCH
-	SET @LOI = @@ERROR
+	SET @LOI = @@ROWCOUNT
 	RETURN
 END CATCH
-SET @LOI = @@ERROR
 
---EXEC DBO.PROC_INSERT_BOOK 'FN03', N'Quốc gia khởi nghiệp', 'Daniel *& Saul Singer', 'AlphaBooks ', 1, Null, 'STARTUP, YOUNG,',@ERR---==--
---SELECT @ERR
+DECLARE @ERR INT 
+EXEC DBO.PROC_INSERT_BOOK 'FN04', N'Quốc gia khởi nghiệp', 'Daniel *& Saul Singer', 'AlphaBooks ', 1, Null, 'STARTUP, YOUNG,',@ERR OUTPUT
+SELECT STR(@ERR, 10)
 --END
 --DROP FUNCTION FUNCTION_BOOK_WITH_TAG
-CREATE FUNCTION DBO.FUNCTION_BOOK_WITH_TAG (@TAG VARCHAR(15))
+CREATE FUNCTION DBO.FUNCTION_FIND_BOOK_WITH_TAG (@TAG VARCHAR(15))
 RETURNS TABLE
 AS
 RETURN 

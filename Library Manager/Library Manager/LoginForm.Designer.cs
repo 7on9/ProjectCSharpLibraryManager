@@ -38,8 +38,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.mvvmContext1 = new DevExpress.Utils.MVVM.MVVMContext(this.components);
             this.btnCreate = new System.Windows.Forms.Button();
+            this.mvvmContext1 = new DevExpress.Utils.MVVM.MVVMContext(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -123,11 +123,6 @@
             this.pictureBox3.TabIndex = 8;
             this.pictureBox3.TabStop = false;
             // 
-            // mvvmContext1
-            // 
-            this.mvvmContext1.ContainerControl = this;
-            this.mvvmContext1.ViewModelType = typeof(Library_Manager.MainViewModel);
-            // 
             // btnCreate
             // 
             this.btnCreate.Location = new System.Drawing.Point(330, 510);
@@ -137,6 +132,11 @@
             this.btnCreate.Text = "Đăng nhập";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
+            // 
+            // mvvmContext1
+            // 
+            this.mvvmContext1.ContainerControl = this;
+            this.mvvmContext1.ViewModelType = typeof(Library_Manager.MainViewModel);
             // 
             // LoginForm
             // 
@@ -160,6 +160,7 @@
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Đăng nhập";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
             this.Load += new System.EventHandler(this.LoginForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

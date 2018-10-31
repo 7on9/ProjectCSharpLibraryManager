@@ -5,12 +5,14 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Library_Manager
 {
     public partial class LoginForm : DevExpress.XtraEditors.XtraForm
     {
+        Thread thread;
         public LoginForm()
         {
             InitializeComponent();
@@ -26,8 +28,8 @@ namespace Library_Manager
         private void LoginForm_Load(object sender, EventArgs e)
         {
             txtUserName.Select();
-            StaticValue.DATABASECONNECTION = new DatabaseConnection();
-            if (StaticValue.DATABASECONNECTION.verifyConnection())
+            Utility.DATABASECONNECTION = new DatabaseConnection();
+            if (Utility.DATABASECONNECTION.verifyConnection())
                 MessageBox.Show("Kết nối thành công đến database!", "Thông báo!");
             else MessageBox.Show("Không thể kết nối database!", "Thông báo!");
         }
@@ -38,15 +40,16 @@ namespace Library_Manager
             
             if (SysAccount.LoginAccount(txtUserName.Text, txtPassword.Text))
             {
-                MessageBox.Show("Tài khoản " + StaticValue.ACCOUNT + " đã đăng nhập thành công!", "Thành công!");
+                MessageBox.Show("Tài khoản " + Utility.ACCOUNT + " đã đăng nhập thành công!", "Thành công!");
             
                 Cursor.Current = Cursors.Default;
 
                 this.Hide();
                 RouterForm router = new RouterForm();
                 router.ShowDialog();
+                SysAccount.LogOutAccount(Utility.ACCOUNT);
                 //router.Activate();
-                this.Close();
+                //this.Close();
             }
             else
             {
@@ -74,6 +77,14 @@ namespace Library_Manager
                 MessageBox.Show("Tạo tài khoản thành công","Thành công!");
             else
                 MessageBox.Show("Tạo tài khoản thất bại", "Thành công!");
+        }
+
+        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
+        {                
+            //this.Close();
+            //thread = new Thread(Utility.OpenNewForm);
+            //thread.SetApartmentState(ApartmentState.STA);
+            //thread.Start();
         }
     }
 }

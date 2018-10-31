@@ -44,9 +44,10 @@ namespace Library_Manager
         public void ExecuteNonQuery(string strSQL)
         {
             SqlCommand sqlcmd = new SqlCommand(strSQL, sqlConn);
-            sqlConn.Open(); //Mo ket noi
+            //if (sqlConn.State == ConnectionState.Closed)
+            //    sqlConn.Open(); //Mo ket noi
             sqlcmd.ExecuteNonQuery();//Lenh hien lenh Them/Xoa/Sua
-            sqlConn.Close();//Dong ket noi
+            //sqlConn.Close();//Dong ket noi
         }
     }
 }

@@ -167,14 +167,14 @@
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             this.đăngXuấtToolStripMenuItem.Click += new System.EventHandler(this.đăngXuấtToolStripMenuItem_Click);
             // 
             // thoátToolStripMenuItem
             // 
             this.thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
-            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.thoátToolStripMenuItem.Text = "Thoát";
             // 
             // tácVụToolStripMenuItem
@@ -287,6 +287,7 @@
             this.Name = "RouterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chọn tác vụ";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RouterForm_FormClosing);
             this.Load += new System.EventHandler(this.RouterForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imgBook)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgUser)).EndInit();

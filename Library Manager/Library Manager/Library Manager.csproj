@@ -85,6 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Book.cs" />
     <Compile Include="BookForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,7 +121,7 @@
     <Compile Include="RouterForm.Designer.cs">
       <DependentUpon>RouterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="StaticValue.cs" />
+    <Compile Include="Utility.cs" />
     <EmbeddedResource Include="BookForm.resx">
       <DependentUpon>BookForm.cs</DependentUpon>
     </EmbeddedResource>

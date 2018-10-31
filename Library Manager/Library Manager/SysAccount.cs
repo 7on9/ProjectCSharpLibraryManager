@@ -29,8 +29,9 @@ namespace Library_Manager
 
         public static bool CreateAccount(string username, string password)
         {
-            string cmd = string.Format("SELECT * FROM ACCOUNT WHERE USER_NAME= '{0}'", username);
-            int rowsCount = StaticValue.DATABASECONNECTION.Execute(cmd).Rows.Count;
+            username = username.ToUpper();
+            string cmd = string.Format("SELECT USER_NAME FROM ACCOUNT WHERE USER_NAME= '{0}'", username);
+            int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count;
             if (rowsCount > 0)
             {
                 return false;
@@ -40,7 +41,7 @@ namespace Library_Manager
                 cmd = string.Format("DECLARE @SUCC INT " +
                                    "EXEC PROC_INSERT_ACCOUNT '{0}', '{1}', @SUCC OUTPUT" +
                                    " SELECT STR(@SUCC, 10)", username, ComputeSha256Hash(password));
-                rowsCount = int.Parse(StaticValue.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString());
+                rowsCount = int.Parse(Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString());
                 if (rowsCount < 0)
                 {
                     return false;
@@ -51,18 +52,29 @@ namespace Library_Manager
 
         public static bool LoginAccount(string username, string password)
         {
+            username = username.ToUpper();
+            string cmd;
             try
             {
-                string cmd = string.Format("SELECT * FROM FUNCTION_LOGIN_ACCOUNT('{0}','{1}')", username,ComputeSha256Hash(password));
-                StaticValue.ACCOUNT = StaticValue.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString();
+                cmd = string.Format("SELECT * FROM FUNCTION_LOGIN_ACCOUNT('{0}','{1}')", username,ComputeSha256Hash(password));
+                Utility.ACCOUNT = Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString();
             } 
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return false;
             }
+            cmd = string.Format("EXEC PROC_LOGIN_EVENT '{0}'", username);
+            Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
             return true;
         }
-       
+        public static void LogOutAccount(string username)
+        {
+            Utility.ACCOUNT = "#";
+            string cmd = string.Format("EXEC PROC_LOGOUT_EVENT '{0}'", username);
+            Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
+        }
+
+
     }
 }

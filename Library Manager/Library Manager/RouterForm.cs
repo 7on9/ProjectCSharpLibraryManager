@@ -20,7 +20,7 @@ namespace Library_Manager
 
         private void RouterForm_Load(object sender, EventArgs e)
         {
-            lblAccount.Text = StaticValue.ACCOUNT;
+            lblAccount.Text = Utility.ACCOUNT;
             toolTipBook.SetToolTip(imgBook, "Thao tác với sách");
             toolTipUser.SetToolTip(imgUser, "Thao tác với người dùng");
             toolTipBorrow.SetToolTip(imgBorrow, "Thao tác với thẻ mượn sách");
@@ -75,6 +75,16 @@ namespace Library_Manager
         private void phiếuMượnSáchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             imgBorrow_Click(sender, e);
+        }
+
+        private void RouterForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.Name == "LoginForm")
+                    form.Show();
+                return;
+            }
         }
     }
 }

@@ -58,6 +58,8 @@ ALTER TABLE BORROW_DETAIL
 ADD CONSTRAINT FK_BOOKBORROW
 FOREIGN KEY (SERIAL) REFERENCES BOOK(SERIAL) ON UPDATE CASCADE;
 
+GO
+
 ----------------------------------------------------------------------------------------------------------------------LOG----------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Trigger auto update database log
 --BOOK
@@ -84,6 +86,7 @@ BEGIN
 					EXEC PROC_INSERT_LOG_EVENT @EVENT
 				END
 END
+GO
 --ACCOUNT
 CREATE TRIGGER TRIG_UPDATE_LOG_ACCOUNT ON ACCOUNT
 FOR INSERT, DELETE, UPDATE
@@ -108,6 +111,7 @@ BEGIN
 					EXEC PROC_INSERT_LOG_EVENT @EVENT
 				END
 END
+GO
 --STUDENT
 CREATE TRIGGER TRIG_UPDATE_LOG_STUDENT ON STUDENT
 FOR INSERT, DELETE, UPDATE
@@ -133,6 +137,7 @@ BEGIN
 					EXEC PROC_INSERT_LOG_EVENT @EVENT
 				END
 END
+GO
 --BORROW
 CREATE TRIGGER TRIG_UPDATE_LOG_BORROW ON BORROW
 FOR INSERT, DELETE, UPDATE
@@ -168,6 +173,7 @@ BEGIN
 				DEALLOCATE CUR_BORROW_BOOK
 			END
 END
+GO
 --DROP PROC PROC_LOGIN_EVENT
 CREATE PROC PROC_LOGIN_EVENT @USER_NAME VARCHAR(65)
 AS
@@ -181,13 +187,15 @@ AS
 		SET @USER_NAME = CONCAT('LOGOUT WITH USER NAME ', @USER_NAME)
 		EXEC PROC_INSERT_LOG_EVENT @USER_NAME
 	END
-EXEC PROC_LOGIN_EVENT 'ADSDASD'
+GO
+--EXEC PROC_LOGIN_EVENT 'ADSDASD'
 CREATE PROC PROC_INSERT_LOG_EVENT @ACTION VARCHAR(100)
 AS
 	INSERT INTO LOG VALUES(@ACTION, SYSDATETIME())
-delete from log where 1=1
-	select *from ACCOUNT
-select * from log
+GO
+--delete from log where 1=1
+--	select *from ACCOUNT
+--select * from log
 ----------------------------------------------------------------------------------------------------------------------LOG----------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------ACCOUNT----------------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE PROC PROC_INSERT_ACCOUNT @USER_NAME VARCHAR(65), @PASSWORD VARCHAR(65), @SUCC INT OUTPUT
@@ -200,7 +208,7 @@ AS
 		SET @SUCC = @@ROWCOUNT
 	RETURN
 	END CATCH
-
+GO
 --DECLARE @SUCC INT 
 --EXEC PROC_INSERT_ACCOUNT 'SSSS','SSSSS',@SUCC OUTPUT
 --SELECT STR(@SUCC, 10)
@@ -210,15 +218,16 @@ AS
 --	SET USER_NAME = 'TAMDAULONG207', PASSWORD = '1'
 --	WHERE USER_NAME = 'LONG'
 
-SELECT * FROM ACCOUNT
-DELETE FROM ACCOUNT WHERE USER_NAME = 'LONG'
-
+--SELECT * FROM ACCOUNT
+--DELETE FROM ACCOUNT WHERE USER_NAME = 'LONG'
+GO
 CREATE FUNCTION DBO.FUNCTION_LOGIN_ACCOUNT(@USER_NAME VARCHAR(65), @PASSWORD VARCHAR(65))
 RETURNS TABLE
 AS
 RETURN
 		SELECT USER_NAME FROM ACCOUNT WHERE USER_NAME = @USER_NAME AND PASSWORD = @PASSWORD
-SELECT * FROM FUNCTION_LOGIN_ACCOUNT('TAMDAULONG207','1')
+GO
+--SELECT * FROM FUNCTION_LOGIN_ACCOUNT('TAMDAULONG207','1')
 ----------------------------------------------------------------------------------------------------------------------ACCOUNT----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------BOOK----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -238,7 +247,7 @@ AS
 BEGIN
 	INSERT INTO BOOK VALUES(@SERIAL, @NAME, @AUTHOR,@PUBLISH_HOUSE, @QUANTUM, @IMG, @TAG)
 end
-
+GO
 CREATE PROC PROC_UPDATE_BOOK 
 	@SERIAL VARCHAR(15), 
 	@NAME NVARCHAR(50), 
@@ -252,15 +261,17 @@ BEGIN
 	SET NAME = @NAME, AUTHOR = @AUTHOR, PUBLISH_HOUSE = @PUBLISH_HOUSE, QUANTUM = @QUANTUM, IMG = @IMG, TAG = @TAG
 	WHERE SERIAL = @SERIAL
 end
-
+GO
 CREATE PROC PROC_DELETE_BOOK 
 	@SERIAL VARCHAR(15)
 AS
 	DELETE BOOK 
 	WHERE SERIAL= @SERIAL
 
-EXEC DBO.PROC_UPDATE_BOOK 'FN03d2', N'ssdadasdasdasdassdass', 'sssger', 'AlssssphaBooks ', 1, Null, 'STARTUP, YOUNG,'
-select * from log order by TIME_CREATE
+GO
+
+--EXEC DBO.PROC_UPDATE_BOOK 'FN03d2', N'ssdadasdasdasdassdass', 'sssger', 'AlssssphaBooks ', 1, Null, 'STARTUP, YOUNG,'--
+--select * from log order by TIME_CREATE
 --END
 --DROP FUNCTION FUNCTION_BOOK_WITH_TAG
 CREATE FUNCTION DBO.FUNCTION_FIND_BOOK_WITH_TAG (@TAG VARCHAR(15))
@@ -269,6 +280,7 @@ AS
 RETURN 
 	SELECT * FROM BOOK WHERE TAG LIKE (CONCAT('%',@TAG,'%'))
 
+GO
 
 CREATE FUNCTION FUNCTION_GET_ALL_BOOK_NAME ()
 RETURNS TABLE
@@ -276,13 +288,19 @@ AS
 RETURN 
 	SELECT NAME FROM BOOK
 
+GO
+
 CREATE FUNCTION FUNCTION_GET_ALL_BOOK_SERIAL ()
 RETURNS TABLE
 AS
 RETURN 
 	SELECT SERIAL FROM BOOK
-select *from book where SERIAL  = 'FN01' and NAME like '%'
-CREATE FUNCTION FUNCTION_FIND_BOOK(@SERIAL NVARCHAR(15)
+
+GO
+
+--select *from book where SERIAL  = 'FN01' and NAME like '%'
+
+--CREATE FUNCTION FUNCTION_FIND_BOOK(@SERIAL NVARCHAR(15)
 
 --SELECT * FROM FUNCTION_BOOK_WITH_TAG('EEE')
 ----------------------------------------------------------------------------------------------------------------------BOOK----------------------------------------------------------------------------------------------------------------------------------------------------------------

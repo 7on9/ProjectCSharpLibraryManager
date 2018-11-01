@@ -10,7 +10,7 @@ namespace Library_Manager
 {
     public class DatabaseConnection
     {
-        SqlConnection sqlConn; //Doi tuong ket noi CSDL
+        public SqlConnection sqlConn; //Doi tuong ket noi CSDL
         SqlDataAdapter da;//Bo dieu phoi du lieu
         DataTable dt; //Doi tuong chhua CSDL khi giao tiep
         public DatabaseConnection()

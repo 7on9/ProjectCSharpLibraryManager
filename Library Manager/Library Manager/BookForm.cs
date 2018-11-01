@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using System.IO;
 
 namespace Library_Manager
 {
@@ -50,6 +51,7 @@ namespace Library_Manager
             switch (btn)
             {
                 case "find":
+                    #region FIND
                     //set button
                     btnMode.Enabled = btnReset.Enabled = tsbtnFindMode.Enabled = status; 
                     //set menu strip
@@ -61,26 +63,50 @@ namespace Library_Manager
                     //Set rbtn find
                     rbtnFindbySerial.Select();
                     rbtnFindbyName.Visible = rbtnFindbySerial.Visible = true;
+                    txtName.Enabled = false;
                     break;
+                    #endregion FIND
                 case "add":
-                    btnAddImage.Enabled = btnMode.Enabled = btnReset.Enabled = tsbtnAddMode.Enabled = txtAmount.Enabled = status;
+                    #region ADD
+                
+                    btnAddImage.Enabled = btnMode.Enabled = btnReset.Enabled = tsbtnAddMode.Enabled = status;
+
                     tsbtnFindMode.Enabled = tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = !status;
+
                     tìmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = !status;
+
+                    //set txt need
+                    txtAmount.Enabled = txtAuthor.Enabled = txtPH.Enabled = txtTag.Enabled = txtName.Enabled = status;
+                    //Set rbtn find
+                    //rbtnFindbySerial.Select();
+                    rbtnFindbyName.Visible = rbtnFindbySerial.Visible = false;
                     break;
+                    #endregion ADD
                 case "del":
-                    btnAddImage.Enabled = btnMode.Enabled = btnReset.Enabled = tsbtnDelMode.Enabled = status;
+                    #region DELETE
+                    btnAddImage.Enabled = !status;
+                    btnMode.Enabled = btnReset.Enabled = tsbtnDelMode.Enabled = status;
+                    txtSerial.Enabled = txtAmount.Enabled = txtAuthor.Enabled = txtPH.Enabled = txtTag.Enabled = txtName.Enabled = !status;
                     tsbtnAddMode.Enabled = tsbtnFindMode.Enabled = tsbtnUpdateMode.Enabled = !status;
                     thêmToolStripMenuItem.Enabled = tìmToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = txtAmount.Enabled = !status;
                     break;
+                    #endregion DELETE
                 case "update":
+                    txtSerial.Enabled = false;
+                    txtAmount.Enabled = txtAuthor.Enabled = txtPH.Enabled = txtTag.Enabled = txtName.Enabled = status;
                     btnAddImage.Enabled = btnMode.Enabled = btnReset.Enabled = tsbtnUpdateMode.Enabled = status;
                     tsbtnAddMode.Enabled = tsbtnDelMode.Enabled = tsbtnFindMode.Enabled = !status;
                     thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = tìmToolStripMenuItem.Enabled = !status;
                     break;
                 case "":
                     btnAddImage.Enabled = btnMode.Enabled = btnReset.Enabled = status;
-                    tsbtnAddMode.Enabled = tsbtnFindMode.Enabled = tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = !status;
-                    tìmToolStripMenuItem.Enabled = thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = txtAmount.Enabled = !status;
+                    tsbtnAddMode.Enabled = tsbtnFindMode.Enabled = !status;
+                    //must found before del or update
+                    tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = status;
+                    tìmToolStripMenuItem.Enabled = thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = 
+                    txtName.Enabled = txtAuthor.Enabled = txtSerial.Enabled = txtTag.Enabled =  txtAmount.Enabled = !status;
+                    //rbtnFindbySerial.Select();
+                    rbtnFindbyName.Visible = rbtnFindbySerial.Visible = false;
                     break;
             }
 
@@ -177,7 +203,8 @@ namespace Library_Manager
             switch (btnMode.Text)
             {
                 case "Tìm":
-                    if(rbtnFindbySerial.Checked)
+                    #region TÌM 
+                    if (rbtnFindbySerial.Checked)
                     {
                         try
                         {
@@ -186,12 +213,28 @@ namespace Library_Manager
                             txtName.Text = table.Rows[0][1].ToString();
                             txtAuthor.Text = table.Rows[0][2].ToString();
                             txtPH.Text = table.Rows[0][3].ToString();
+                            
                             txtAmount.Text = table.Rows[0][4].ToString();
+                            //img
+                            if (table.Rows[0][5] == DBNull.Value)
+                            {
+                                ptbImg.Image = ptbImg.InitialImage;
+                            }
+                            else
+                            {
+                                byte[] img = (byte[])table.Rows[0][5];
+                                MemoryStream ms = new MemoryStream(img);
+                                ptbImg.Image = Image.FromStream(ms);
+                            }
+                            //
                             txtTag.Text = table.Rows[0][6].ToString();
+                            tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = true;
+                            xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = true;
                         }
                         catch(Exception ex)
                         {
-                            MessageBox.Show(ex.Message);
+                            clear();
+                            MessageBox.Show("Không tìm thấy sách", "Thất bại!");
                         }
                     }
                     else
@@ -204,22 +247,73 @@ namespace Library_Manager
                             txtAuthor.Text = table.Rows[0][2].ToString();
                             txtPH.Text = table.Rows[0][3].ToString();
                             txtAmount.Text = table.Rows[0][4].ToString();
+                            //img
+                            try
+                            {
+                                if (table.Rows[0][5] == null)
+                                {
+                                    ptbImg.Image = ptbImg.InitialImage;
+                                }
+                                else
+                                {
+                                    byte[] img = (byte[])table.Rows[0][5];
+                                    MemoryStream ms = new MemoryStream(img);
+                                    ptbImg.Image = Image.FromStream(ms);
+                                }
+                                //
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                             txtTag.Text = table.Rows[0][6].ToString();
+                            tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = true;
+                            xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = true;
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, "Thất bại!");
+                            clear();
+                            MessageBox.Show("Không tìm thấy sách", "Thất bại!");
                         }
                     }
+                    #endregion TÌM
                     break;
                 case "Thêm":
+                    #region THÊM
+                    if ((txtAuthor.TextLength * txtName.TextLength * txtPH.TextLength * txtSerial.TextLength * txtTag.TextLength * imgLogcation.Length) == 0)
+                    {
+                        MessageBox.Show("Bạn cần điền đầy đủ thông tin cho sách", "Lỗi", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    }
+                    else
+                        if (Book.insertBook(txtSerial.Text, txtName.Text, txtAuthor.Text, txtPH.Text, (int)txtAmount.Value, imgLogcation, txtTag.Text))
+                            MessageBox.Show("Thêm sách thành công!", "Thành công");
+                        else
+                            MessageBox.Show("Thêm sách thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    #endregion THÊM
                     break;
                 case "Xóa":
-
+                    if(Book.deleteBook(txtSerial.Text))
+                    {
+                        MessageBox.Show("Xóa sách thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                        MessageBox.Show("Không xóa được sách", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 case "Sửa":
-
+                    #region SỬA
+                    if ((txtAuthor.TextLength * txtName.TextLength * txtPH.TextLength * txtSerial.TextLength * txtTag.TextLength * imgLogcation.Length) == 0)
+                    {
+                        MessageBox.Show("Bạn cần điền đầy đủ thông tin cho sách", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        if (Book.updateBook(txtSerial.Text, txtName.Text, txtAuthor.Text, txtPH.Text, (int)txtAmount.Value, imgLogcation, txtTag.Text))
+                            MessageBox.Show("Sửa sách thành công!", "Thành công");
+                        else
+                            MessageBox.Show("Sửa sách thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     break;
+                    #endregion SỬA
                 default:
                     break;
             }
@@ -235,6 +329,7 @@ namespace Library_Manager
         {
             setLabel("chưa chọn");
             setButton("", false);
+            imgLogcation = "";
             clear();
         }
 
@@ -242,7 +337,7 @@ namespace Library_Manager
         {
             if ((txtAuthor.TextLength + txtName.TextLength + txtPH.TextLength + txtSerial.TextLength + txtTag.TextLength) > 0)
             {
-                if (MessageBox.Show("Có vẻ như bạn chưa hoàn thành công việc... \n\n Bạn có chắc muốn thoát?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBox.Show("Có vẻ như bạn chưa hoàn thành công việc... \n\n Bạn có chắc muốn thoát?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                     e.Cancel = true;
             }
         }
@@ -256,18 +351,41 @@ namespace Library_Manager
                             "Đoàn Ngọc Thiện", "Thông tin");
         }
 
+        #region RADIOBUTTON
         private void rbtnFindbySerial_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtnFindbySerial.Checked)
             {
                 txtSerial.Enabled = true;
+                txtSerial.Select();
                 txtName.Enabled = false;
             }
             else
             {
                 txtSerial.Enabled = false;
                 txtName.Enabled = true;
+                txtName.Select();
             }
+        }
+        #endregion RADIOBUTTON
+
+        private void VerifyInput_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            for (int i = 0; i < textBox.TextLength; i++)
+            {
+                if (char.IsLetterOrDigit(textBox.Text[i]) == false && textBox.Text[i] != ' ' && textBox.Text[i] != ',')
+                {
+                    textBox.Text = textBox.Text.Remove(i, 1);
+                    textBox.SelectionStart = i;
+                    textBox.SelectionLength = 0;
+                }
+            }
+        }
+
+        private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Library_Manager
         public static bool CreateAccount(string username, string password)
         {
             username = username.ToUpper();
-            string cmd = string.Format("SELECT USER_NAME FROM ACCOUNT WHERE USER_NAME= '{0}'", username);
+            string cmd = string.Format("SELECT USER_NAME FROM ACCOUNT WHERE USER_NAME = '{0}'", username);
             int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count;
             if (rowsCount > 0)
             {
@@ -61,7 +61,7 @@ namespace Library_Manager
             } 
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
                 return false;
             }
             cmd = string.Format("EXEC PROC_LOGIN_EVENT '{0}'", username);

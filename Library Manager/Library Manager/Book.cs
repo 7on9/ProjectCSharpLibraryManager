@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +20,7 @@ namespace Library_Manager
                 res[i] = dataTable.Rows[i][0].ToString();
             return res;
         }
+
         public static string[] getBookSerial()
         {
             DataTable dataTable = Utility.DATABASECONNECTION.Execute("SELECT * FROM FUNCTION_GET_ALL_BOOK_SERIAL()");
@@ -25,6 +29,7 @@ namespace Library_Manager
                 res[i] = dataTable.Rows[i][0].ToString();
             return res;
         }
+
         public static DataTable findBookByName(string name)
         {
             string cmd = "";
@@ -35,6 +40,7 @@ namespace Library_Manager
             }
             return null;
         }
+
         public static DataTable findBookBySerial(string serial)
         {
             string cmd = "";
@@ -44,6 +50,83 @@ namespace Library_Manager
                 return Utility.DATABASECONNECTION.Execute(cmd);
             }
             return null;
+        }
+
+        public static bool insertBook(string serial, string name, string author, string ph, int quantum, string imageLoc, string tag)
+        {
+            string cmd = string.Format("SELECT SERIAL FROM BOOK WHERE SERIAL = '{0}'", serial);
+            string cmd2 = string.Format("SELECT NAME FROM BOOK WHERE NAME LIKE N'{0}'", name);
+            int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count + Utility.DATABASECONNECTION.Execute(cmd2).Rows.Count;
+            if (rowsCount > 0)
+            {
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    byte[] img = null;
+                    FileStream fileStream = new FileStream(imageLoc, FileMode.Open, FileAccess.Read);
+                    BinaryReader binaryReader = new BinaryReader(fileStream);
+                    img = binaryReader.ReadBytes((int)fileStream.Length);
+                    SqlCommand sqlCommand;
+                    cmd = string.Format("EXEC PROC_INSERT_BOOK " +
+                                        "'{0}', N'{1}', N'{2}', N'{3}', {4}, @img, '{5}'", serial, name, author, ph, quantum, tag);
+                    sqlCommand = new SqlCommand(cmd, Utility.DATABASECONNECTION.sqlConn);
+                    sqlCommand.Parameters.Add("@img", img);
+                    sqlCommand.ExecuteNonQuery();
+                } 
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            return true;
+        }
+
+        public static bool updateBook(string serial, string name, string author, string ph, int quantum, string imageLoc, string tag)
+        {
+            string cmd = string.Format("SELECT SERIAL FROM BOOK WHERE SERIAL = '{0}'", serial);
+            int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count;
+            if (rowsCount == 0)
+            {
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    byte[] img = null;
+                    FileStream fileStream = new FileStream(imageLoc, FileMode.Open, FileAccess.Read);
+                    BinaryReader binaryReader = new BinaryReader(fileStream);
+                    img = binaryReader.ReadBytes((int)fileStream.Length);
+                    SqlCommand sqlCommand;
+                    cmd = string.Format("EXEC PROC_UPDATE_BOOK " +
+                                        "'{0}', N'{1}', N'{2}', N'{3}', {4}, @img, '{5}'", serial, name, author, ph, quantum, tag);
+                    sqlCommand = new SqlCommand(cmd, Utility.DATABASECONNECTION.sqlConn);
+                    sqlCommand.Parameters.Add("@img", img);
+                    sqlCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            return true;
+        }
+        public static bool deleteBook(string serial)
+        {
+            string cmd = "";
+            try
+            {
+                cmd = string.Format("EXEC PROC_DELETE_BOOK {0}", serial);
+                Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

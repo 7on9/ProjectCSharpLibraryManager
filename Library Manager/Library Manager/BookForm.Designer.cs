@@ -226,14 +226,15 @@
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
             // thoátToolStripMenuItem
             // 
             this.thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
-            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.thoátToolStripMenuItem.Text = "Thoát";
+            this.thoátToolStripMenuItem.Click += new System.EventHandler(this.thoátToolStripMenuItem_Click);
             // 
             // chếĐộToolStripMenuItem
             // 
@@ -286,13 +287,13 @@
             // hướngDẫnToolStripMenuItem
             // 
             this.hướngDẫnToolStripMenuItem.Name = "hướngDẫnToolStripMenuItem";
-            this.hướngDẫnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.hướngDẫnToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.hướngDẫnToolStripMenuItem.Text = "Hướng dẫn";
             // 
             // thôngTinToolStripMenuItem
             // 
             this.thôngTinToolStripMenuItem.Name = "thôngTinToolStripMenuItem";
-            this.thôngTinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thôngTinToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.thôngTinToolStripMenuItem.Text = "Thông tin";
             this.thôngTinToolStripMenuItem.Click += new System.EventHandler(this.thôngTinToolStripMenuItem_Click);
             // 
@@ -393,6 +394,7 @@
             this.txtSerial.Name = "txtSerial";
             this.txtSerial.Size = new System.Drawing.Size(270, 26);
             this.txtSerial.TabIndex = 1;
+            this.txtSerial.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
             // txtName
             // 
@@ -403,6 +405,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(270, 26);
             this.txtName.TabIndex = 2;
+            this.txtName.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
             // txtAuthor
             // 
@@ -410,6 +413,7 @@
             this.txtAuthor.Name = "txtAuthor";
             this.txtAuthor.Size = new System.Drawing.Size(270, 26);
             this.txtAuthor.TabIndex = 3;
+            this.txtAuthor.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
             // txtPH
             // 
@@ -417,6 +421,7 @@
             this.txtPH.Name = "txtPH";
             this.txtPH.Size = new System.Drawing.Size(270, 26);
             this.txtPH.TabIndex = 4;
+            this.txtPH.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
             // txtAmount
             // 
@@ -442,6 +447,7 @@
             this.txtTag.Name = "txtTag";
             this.txtTag.Size = new System.Drawing.Size(270, 120);
             this.txtTag.TabIndex = 6;
+            this.txtTag.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
             // toolStrip2
             // 

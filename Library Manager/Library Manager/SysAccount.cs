@@ -74,7 +74,5 @@ namespace Library_Manager
             string cmd = string.Format("EXEC PROC_LOGOUT_EVENT '{0}'", username);
             Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
         }
-
-
     }
 }

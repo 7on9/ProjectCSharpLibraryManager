@@ -22,34 +22,15 @@ namespace Library_Manager
         {
             lblAccount.Text = Utility.ACCOUNT;
             toolTipBook.SetToolTip(imgBook, "Thao tác với sách");
-            toolTipUser.SetToolTip(imgUser, "Thao tác với người dùng");
+            toolTipUser.SetToolTip(imgUser, "Thao tác với tài khoản sinh viên");
             toolTipBorrow.SetToolTip(imgBorrow, "Thao tác với thẻ mượn sách");
             toolTipData.SetToolTip(imgData, "Thao tác với dữ liệu");
         }
 
-        private void imgBook_Click(object sender, EventArgs e)
-        {
-            BookForm bookForm = new BookForm();
-            bookForm.Show();
-        }
-
-        private void imgUser_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void imgBorrow_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void imgData_Click(object sender, EventArgs e)
-        {
-
-        }
+        
         private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
 
         private void timeSystem_Tick(object sender, EventArgs e)
@@ -59,32 +40,67 @@ namespace Library_Manager
 
         private void sáchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imgBook_Click(sender, e);
+            imgGoToForm_Click(sender, e);
         }
 
         private void thẻThưViệnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imgUser_Click(sender, e);
+            imgGoToForm_Click(sender, e);
         }
 
         private void dữLiệuHệThốngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imgData_Click(sender, e);
+            imgGoToForm_Click(sender, e);
         }
 
         private void phiếuMượnSáchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imgBorrow_Click(sender, e);
+            imgGoToForm_Click(sender, e);
         }
 
         private void RouterForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (MessageBox.Show("Bạn có chắc là muốn đăng xuất khỏi tài khoản?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                e.Cancel = true;
+                return;
+            }
             foreach (Form form in Application.OpenForms)
             {
                 if (form.Name == "LoginForm")
+                {
+                    SysAccount.LogOutAccount(Utility.ACCOUNT);
                     form.Show();
+                }
                 return;
             }
+        }
+
+        private void imgGoToForm_Click(object sender, EventArgs e)
+        {
+            Form senderForm = (Form)sender;
+            foreach (Form form in Application.OpenForms)
+                if (form.Name == senderForm.Tag)
+                {
+                    form.Show();
+                }
+                else
+                {
+                    switch(senderForm.Tag)
+                    {
+                        case "BookForm":
+                            BookForm bookForm = new BookForm();
+                            bookForm.Show();
+                            break;
+                        case "StudentForm":
+                            break;
+                        case "LogForm":
+                            break;
+                        case "BorrowForm":
+                            break;
+                            
+                    }
+                }
         }
     }
 }

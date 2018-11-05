@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,52 +9,52 @@ using System.Threading.Tasks;
 
 namespace Library_Manager
 {
-    public static class Book
+    public static class Student
     {
-        public static string[] getBookName()
+        public static string[] getStudentName()
         {
-            DataTable dataTable = Utility.DATABASECONNECTION.Execute("SELECT * FROM FUNCTION_GET_ALL_BOOK_NAME()");
+            DataTable dataTable = Utility.DATABASECONNECTION.Execute("SELECT * FROM FUNCTION_GET_ALL_STUDENT_NAME()");
             string[] res = new string[dataTable.Rows.Count];
             for (int i = 0; i < dataTable.Rows.Count; i++)
                 res[i] = dataTable.Rows[i][0].ToString();
             return res;
         }
 
-        public static string[] getBookSerial()
+        public static string[] getStudentId()
         {
-            DataTable dataTable = Utility.DATABASECONNECTION.Execute("SELECT * FROM FUNCTION_GET_ALL_BOOK_SERIAL()");
+            DataTable dataTable = Utility.DATABASECONNECTION.Execute("SELECT * FROM FUNCTION_GET_ALL_STUDENT_ID()");
             string[] res = new string[dataTable.Rows.Count];
             for (int i = 0; i < dataTable.Rows.Count; i++)
                 res[i] = dataTable.Rows[i][0].ToString();
             return res;
         }
 
-        public static DataTable findBookByName(string name)
+        public static DataTable findStudentByName(string name)
         {
             string cmd = "";
             if (name.Length > 0)
             {
-                cmd = string.Format("SELECT * FROM BOOK WHERE NAME LIKE N'{0}'", name);
+                cmd = string.Format("SELECT * FROM STUDENT WHERE NAME LIKE N'{0}'", name);
                 return Utility.DATABASECONNECTION.Execute(cmd);
             }
             return null;
         }
 
-        public static DataTable findBookBySerial(string serial)
+        public static DataTable findStudentById(string id)
         {
             string cmd = "";
-            if (serial.Length > 0)
+            if (id.Length > 0)
             {
-                cmd = string.Format("SELECT * FROM BOOK WHERE SERIAL LIKE '{0}'", serial);
+                cmd = string.Format("SELECT * FROM STUDENT WHERE ID LIKE '{0}'", id);
                 return Utility.DATABASECONNECTION.Execute(cmd);
             }
             return null;
         }
 
-        public static bool insertBook(string serial, string name, string author, string ph, int quantum, string imageLoc, string tag)
+        public static bool insertStudent(string id, string name, string phone, string email, string imageLoc)
         {
-            string cmd = string.Format("SELECT SERIAL FROM BOOK WHERE SERIAL = '{0}'", serial);
-            string cmd2 = string.Format("SELECT NAME FROM BOOK WHERE NAME LIKE N'{0}'", name);
+            string cmd = string.Format("SELECT ID FROM STUDENT WHERE ID = '{0}'", id);
+            string cmd2 = string.Format("SELECT NAME FROM STUDENT WHERE NAME LIKE N'{0}'", name);
             int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count + Utility.DATABASECONNECTION.Execute(cmd2).Rows.Count;
             if (rowsCount > 0)
             {
@@ -70,13 +69,13 @@ namespace Library_Manager
                     BinaryReader binaryReader = new BinaryReader(fileStream);
                     img = binaryReader.ReadBytes((int)fileStream.Length);
                     SqlCommand sqlCommand;
-                    cmd = string.Format("EXEC PROC_INSERT_BOOK " +
-                                        "'{0}', N'{1}', N'{2}', N'{3}', {4}, @img, '{5}'", serial, name, author, ph, quantum, tag);
+                    cmd = string.Format("EXEC PROC_INSERT_STUDENT " +
+                                        "'{0}', N'{1}', '{2}', '{3}', @img", id, name, phone, email);
                     sqlCommand = new SqlCommand(cmd, Utility.DATABASECONNECTION.sqlConn);
                     sqlCommand.Parameters.Add("@img", img);
                     sqlCommand.ExecuteNonQuery();
-                } 
-                catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
@@ -84,9 +83,9 @@ namespace Library_Manager
             return true;
         }
 
-        public static bool updateBook(string serial, string name, string author, string ph, int quantum, string imageLoc, string tag)
+        public static bool updateStudent(string id, string name, string phone, string email, string imageLoc)
         {
-            string cmd = string.Format("SELECT SERIAL FROM BOOK WHERE SERIAL = '{0}'", serial);
+            string cmd = string.Format("SELECT ID FROM STUDENT WHERE ID = '{0}'", id);
             int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count;
             if (rowsCount == 0)
             {
@@ -101,8 +100,8 @@ namespace Library_Manager
                     BinaryReader binaryReader = new BinaryReader(fileStream);
                     img = binaryReader.ReadBytes((int)fileStream.Length);
                     SqlCommand sqlCommand;
-                    cmd = string.Format("EXEC PROC_UPDATE_BOOK " +
-                                        "'{0}', N'{1}', N'{2}', N'{3}', {4}, @img, '{5}'", serial, name, author, ph, quantum, tag);
+                    cmd = string.Format("EXEC PROC_UPDATE_STUDENT " +
+                                        "'{0}', N'{1}', '{2}', '{3}', @img", id, name, phone, email);
                     sqlCommand = new SqlCommand(cmd, Utility.DATABASECONNECTION.sqlConn);
                     sqlCommand.Parameters.Add("@img", img);
                     sqlCommand.ExecuteNonQuery();
@@ -115,10 +114,9 @@ namespace Library_Manager
             }
             return true;
         }
-
-        public static bool updateBook(string serial, string name, string author, string ph, int quantum, byte[] img, string tag)
+        public static bool updateStudent(string id, string name, string phone, string email, byte[] img)
         {
-            string cmd = string.Format("SELECT SERIAL FROM BOOK WHERE SERIAL = '{0}'", serial);
+            string cmd = string.Format("SELECT ID FROM STUDENT WHERE ID = '{0}'", id);
             int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count;
             if (rowsCount == 0)
             {
@@ -129,8 +127,8 @@ namespace Library_Manager
                 try
                 {
                     SqlCommand sqlCommand;
-                    cmd = string.Format("EXEC PROC_UPDATE_BOOK " +
-                                        "'{0}', N'{1}', N'{2}', N'{3}', {4}, @img, '{5}'", serial, name, author, ph, quantum, tag);
+                    cmd = string.Format("EXEC PROC_UPDATE_STUDENT " +
+                                        "'{0}', N'{1}', '{2}', '{3}', @img", id, name, phone, email);
                     sqlCommand = new SqlCommand(cmd, Utility.DATABASECONNECTION.sqlConn);
                     sqlCommand.Parameters.Add("@img", img);
                     sqlCommand.ExecuteNonQuery();
@@ -142,14 +140,13 @@ namespace Library_Manager
                 }
             }
             return true;
-        } 
-
-        public static bool deleteBook(string serial)
+        }
+        public static bool deleteStudent(string id)
         {
             string cmd = "";
             try
             {
-                cmd = string.Format("EXEC PROC_DELETE_BOOK {0}", serial);
+                cmd = string.Format("EXEC PROC_DELETE_STUDENT {0}", id);
                 Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
             }
             catch (Exception e)

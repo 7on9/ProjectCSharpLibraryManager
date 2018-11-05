@@ -47,7 +47,7 @@ namespace Library_Manager
                 this.Hide();
                 RouterForm router = new RouterForm();
                 router.ShowDialog();
-                SysAccount.LogOutAccount(Utility.ACCOUNT);
+                //SysAccount.LogOutAccount(Utility.ACCOUNT);
                 //router.Activate();
                 //this.Close();
             }

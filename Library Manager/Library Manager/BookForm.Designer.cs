@@ -121,7 +121,7 @@
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
             this.barDockControlTop.Margin = new System.Windows.Forms.Padding(4);
-            this.barDockControlTop.Size = new System.Drawing.Size(962, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(901, 0);
             // 
             // barDockControlBottom
             // 
@@ -130,7 +130,7 @@
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 685);
             this.barDockControlBottom.Manager = this.barManager1;
             this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(4);
-            this.barDockControlBottom.Size = new System.Drawing.Size(962, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(901, 0);
             // 
             // barDockControlLeft
             // 
@@ -145,7 +145,7 @@
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(962, 0);
+            this.barDockControlRight.Location = new System.Drawing.Point(901, 0);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Margin = new System.Windows.Forms.Padding(4);
             this.barDockControlRight.Size = new System.Drawing.Size(0, 685);
@@ -210,7 +210,7 @@
             this.tiệnÍchToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(962, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(901, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -226,13 +226,13 @@
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
             // thoátToolStripMenuItem
             // 
             this.thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
-            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.thoátToolStripMenuItem.Text = "Thoát";
             this.thoátToolStripMenuItem.Click += new System.EventHandler(this.thoátToolStripMenuItem_Click);
             // 
@@ -303,7 +303,7 @@
             this.ptbImg.ErrorImage = ((System.Drawing.Image)(resources.GetObject("ptbImg.ErrorImage")));
             this.ptbImg.Image = ((System.Drawing.Image)(resources.GetObject("ptbImg.Image")));
             this.ptbImg.InitialImage = ((System.Drawing.Image)(resources.GetObject("ptbImg.InitialImage")));
-            this.ptbImg.Location = new System.Drawing.Point(540, 150);
+            this.ptbImg.Location = new System.Drawing.Point(510, 150);
             this.ptbImg.Name = "ptbImg";
             this.ptbImg.Size = new System.Drawing.Size(330, 420);
             this.ptbImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -317,7 +317,7 @@
             // 
             // btnAddImage
             // 
-            this.btnAddImage.Location = new System.Drawing.Point(660, 600);
+            this.btnAddImage.Location = new System.Drawing.Point(630, 600);
             this.btnAddImage.Name = "btnAddImage";
             this.btnAddImage.Size = new System.Drawing.Size(90, 30);
             this.btnAddImage.TabIndex = 7;
@@ -462,7 +462,7 @@
             this.toolStrip2.Location = new System.Drawing.Point(0, 655);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip2.Size = new System.Drawing.Size(962, 30);
+            this.toolStrip2.Size = new System.Drawing.Size(901, 30);
             this.toolStrip2.TabIndex = 36;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -612,7 +612,7 @@
             this.btnReset});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(962, 96);
+            this.toolStrip1.Size = new System.Drawing.Size(901, 96);
             this.toolStrip1.TabIndex = 37;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -643,7 +643,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 685);
+            this.ClientSize = new System.Drawing.Size(901, 685);
             this.Controls.Add(this.rbtnFindbyName);
             this.Controls.Add(this.rbtnFindbySerial);
             this.Controls.Add(this.btnMode);

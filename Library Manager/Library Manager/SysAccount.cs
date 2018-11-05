@@ -70,8 +70,8 @@ namespace Library_Manager
         }
         public static void LogOutAccount(string username)
         {
-            Utility.ACCOUNT = "#";
             string cmd = string.Format("EXEC PROC_LOGOUT_EVENT '{0}'", username);
+            Utility.ACCOUNT = "#";
             Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
         }
     }

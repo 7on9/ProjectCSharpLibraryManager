@@ -78,29 +78,33 @@ namespace Library_Manager
 
         private void imgGoToForm_Click(object sender, EventArgs e)
         {
-            Form senderForm = (Form)sender;
+            PictureBox senderForm = (PictureBox)sender;
+            bool opened = false;
             foreach (Form form in Application.OpenForms)
                 if (form.Name == senderForm.Tag)
                 {
+                    opened = true;
                     form.Show();
+                    break;
                 }
-                else
+            if (!opened)
+            {
+                switch (senderForm.Tag)
                 {
-                    switch(senderForm.Tag)
-                    {
-                        case "BookForm":
-                            BookForm bookForm = new BookForm();
-                            bookForm.Show();
-                            break;
-                        case "StudentForm":
-                            break;
-                        case "LogForm":
-                            break;
-                        case "BorrowForm":
-                            break;
-                            
-                    }
+                    case "BookForm":
+                        BookForm bookForm = new BookForm();
+                        bookForm.Show();
+                        break;
+                    case "StudentForm":
+                        StudentForm studentForm = new StudentForm();
+                        studentForm.Show();
+                        break;
+                    case "LogForm":
+                        break;
+                    case "BorrowForm":
+                        break;
                 }
+            }
         }
     }
 }

@@ -68,18 +68,20 @@ FOR INSERT, DELETE, UPDATE
 AS
 BEGIN
 	DECLARE @EVENT NVARCHAR(100)
-	IF UPDATE(NAME) OR UPDATE(AUTHOR) OR UPDATE(PUBLISH_HOUSE) OR UPDATE(QUANTUM) OR UPDATE(IMG) OR UPDATE(TAG)
+	IF EXISTS(SELECT * FROM inserted)
 			BEGIN
-				SET @EVENT = CONCAT('UPDATE BOOK HAVE SERIAL ', (SELECT SERIAL FROM INSERTED))
-				EXEC PROC_INSERT_LOG_EVENT @EVENT
+				IF EXISTS(SELECT * FROM deleted)
+					BEGIN
+						SET @EVENT = CONCAT('UPDATE BOOK HAVE SERIAL ', (SELECT SERIAL FROM INSERTED))
+						EXEC PROC_INSERT_LOG_EVENT @EVENT
+					END
+				ELSE 
+						BEGIN
+							SET @EVENT = CONCAT('INSERT BOOK HAVE SERIAL ', (SELECT SERIAL FROM INSERTED))
+							EXEC PROC_INSERT_LOG_EVENT @EVENT
+						END
 			END
 	ELSE
-		IF (SELECT COUNT(*) FROM  INSERTED) > 0
-			BEGIN
-				SET @EVENT = CONCAT('INSERT BOOK HAVE SERIAL ', (SELECT SERIAL FROM INSERTED))
-				EXEC PROC_INSERT_LOG_EVENT @EVENT
-			END
-		ELSE
 			IF (SELECT COUNT(*) FROM  DELETED) > 0
 				BEGIN
 					SET @EVENT = CONCAT('DELETE BOOK HAVE SERIAL ', (SELECT SERIAL FROM DELETED))
@@ -93,21 +95,23 @@ FOR INSERT, DELETE, UPDATE
 AS
 BEGIN
 	DECLARE @EVENT NVARCHAR(100)
-	IF UPDATE(PASSWORD)
+	IF EXISTS(SELECT * FROM inserted)
 			BEGIN
-				SET @EVENT = CONCAT('UPDATE PASSWORD FOR USER ', (SELECT USER_NAME FROM INSERTED))
-				EXEC PROC_INSERT_LOG_EVENT @EVENT
+				IF EXISTS(SELECT * FROM deleted)
+					BEGIN
+						SET @EVENT = CONCAT('UPDATE PASSWORD FOR USER ', (SELECT USER_NAME FROM INSERTED))
+						EXEC PROC_INSERT_LOG_EVENT @EVENT
+					END
+				ELSE
+					BEGIN
+						SET @EVENT = CONCAT('CREATE USE ', (SELECT USER_NAME FROM INSERTED))
+						EXEC PROC_INSERT_LOG_EVENT @EVENT
+					END
 			END
 		ELSE
 			IF (SELECT COUNT(*) FROM  DELETED) > 0
 				BEGIN
 					SET @EVENT = CONCAT('DELETE USER ', (SELECT USER_NAME FROM DELETED))
-					EXEC PROC_INSERT_LOG_EVENT @EVENT
-				END
-	ELSE
-			IF (SELECT COUNT(*) FROM  INSERTED) > 0
-				BEGIN
-					SET @EVENT = CONCAT('CREATE USE ', (SELECT USER_NAME FROM INSERTED))
 					EXEC PROC_INSERT_LOG_EVENT @EVENT
 				END
 END
@@ -118,24 +122,25 @@ FOR INSERT, DELETE, UPDATE
 AS
 BEGIN
 	DECLARE @EVENT NVARCHAR(100)
-	IF UPDATE(NAME) OR UPDATE(PHONE) OR UPDATE(EMAIL) OR UPDATE(IMG)
+	IF EXISTS(SELECT * FROM inserted)
 			BEGIN
-				SET @EVENT = CONCAT('UPDATE STUDENT ID ', (SELECT ID FROM INSERTED))
-				EXEC PROC_INSERT_LOG_EVENT @EVENT
+				IF EXISTS(SELECT * FROM deleted)
+					BEGIN
+						SET @EVENT = CONCAT('UPDATE STUDENT ID ', (SELECT ID FROM INSERTED))
+						EXEC PROC_INSERT_LOG_EVENT @EVENT
+					END
+				ELSE
+					BEGIN
+							SET @EVENT = CONCAT('INSERT USER ID ', (SELECT ID FROM INSERTED))
+							EXEC PROC_INSERT_LOG_EVENT @EVENT
+					END
 			END
-	
 	ELSE
-		IF (SELECT COUNT(*) FROM  INSERTED) > 0
+		IF (SELECT COUNT(*) FROM  DELETED) > 0
 			BEGIN
-				SET @EVENT = CONCAT('INSERT USER ID ', (SELECT ID FROM INSERTED))
+				SET @EVENT = CONCAT('DELETE STUDENT ID ', (SELECT ID FROM DELETED))
 				EXEC PROC_INSERT_LOG_EVENT @EVENT
 			END
-		ELSE
-			IF (SELECT COUNT(*) FROM  DELETED) > 0
-				BEGIN
-					SET @EVENT = CONCAT('DELETE STUDENT ID ', (SELECT ID FROM DELETED))
-					EXEC PROC_INSERT_LOG_EVENT @EVENT
-				END
 END
 GO
 --BORROW
@@ -196,6 +201,8 @@ GO
 --delete from log where 1=1
 --	select *from ACCOUNT
 --select * from log
+--select * from log order by TIME_CREATE
+--END
 ----------------------------------------------------------------------------------------------------------------------LOG----------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------ACCOUNT----------------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE PROC PROC_INSERT_ACCOUNT @USER_NAME VARCHAR(65), @PASSWORD VARCHAR(65), @SUCC INT OUTPUT
@@ -241,7 +248,8 @@ CREATE PROC PROC_INSERT_BOOK
 	@NAME NVARCHAR(50), 
 	@AUTHOR NVARCHAR(50), 
 	@PUBLISH_HOUSE NVARCHAR(50), 
-	@QUANTUM INT, @IMG IMAGE, 
+	@QUANTUM INT, 
+	@IMG IMAGE, 
 	@TAG VARCHAR(300)
 AS
 BEGIN
@@ -253,7 +261,8 @@ CREATE PROC PROC_UPDATE_BOOK
 	@NAME NVARCHAR(50), 
 	@AUTHOR NVARCHAR(50), 
 	@PUBLISH_HOUSE NVARCHAR(50), 
-	@QUANTUM INT, @IMG IMAGE, 
+	@QUANTUM INT, 
+	@IMG IMAGE, 
 	@TAG VARCHAR(300)
 AS
 BEGIN
@@ -303,4 +312,64 @@ GO
 --CREATE FUNCTION FUNCTION_FIND_BOOK(@SERIAL NVARCHAR(15)
 
 --SELECT * FROM FUNCTION_BOOK_WITH_TAG('EEE')
-----------------------------------------------------------------------------------------------------------------------BOOK----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------STUDENT----------------------------------------------------------------------------------------------------------------------------------------------------------------
+--DROP PROC PROC_INSERT_STUDENT
+CREATE PROC PROC_INSERT_STUDENT 
+	@ID VARCHAR(15), 
+	@NAME NVARCHAR(50), 
+	@PHONE NVARCHAR(15), 
+	@EMAIL VARCHAR(50),
+	@IMG IMAGE
+AS
+BEGIN
+	INSERT INTO STUDENT VALUES(@ID, @NAME, @PHONE,@EMAIL, @IMG)
+end
+
+
+GO
+
+CREATE PROC PROC_UPDATE_STUDENT 
+	@ID VARCHAR(15), 
+	@NAME NVARCHAR(50), 
+	@PHONE VARCHAR(15), 
+	@EMAIL VARCHAR(50),
+	@IMG IMAGE
+
+AS
+
+BEGIN
+	UPDATE STUDENT 
+	SET NAME = @NAME, EMAIL = @EMAIL, PHONE = @PHONE, IMG = @IMG
+	WHERE ID = @ID
+end
+
+GO
+CREATE PROC PROC_DELETE_STUDENT 
+	@ID VARCHAR(15)
+AS
+	DELETE STUDENT 
+	WHERE ID= @ID
+
+GO
+
+--EXEC DBO.PROC_UPDATE_STUDENT 'FN03d2', N'ssdadasdasdasdassdass', 'sssger', 'AlssssphaSTUDENTs ', 1, Null, 'STARTUP, YOUNG,'--
+
+
+CREATE FUNCTION FUNCTION_GET_ALL_STUDENT_NAME ()
+RETURNS TABLE
+AS
+RETURN 
+	SELECT NAME FROM STUDENT
+
+GO
+
+CREATE FUNCTION FUNCTION_GET_ALL_STUDENT_ID ()
+RETURNS TABLE
+AS
+RETURN 
+	SELECT ID FROM STUDENT
+
+GO
+
+
+----------------------------------------------------------------------------------------------------------------------STUDENT----------------------------------------------------------------------------------------------------------------------------------------------------------------

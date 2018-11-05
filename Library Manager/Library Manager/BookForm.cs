@@ -15,6 +15,7 @@ namespace Library_Manager
     public partial class BookForm : DevExpress.XtraEditors.XtraForm
     {
         string imgLogcation = "";
+        DataTable table;
         public BookForm()
         {
             InitializeComponent();
@@ -209,12 +210,11 @@ namespace Library_Manager
                     {
                         try
                         {
-                            DataTable table = Book.findBookBySerial(txtSerial.Text);
+                            table = Book.findBookBySerial(txtSerial.Text);
                             txtSerial.Text = table.Rows[0][0].ToString();
                             txtName.Text = table.Rows[0][1].ToString();
                             txtAuthor.Text = table.Rows[0][2].ToString();
                             txtPH.Text = table.Rows[0][3].ToString();
-                            
                             txtAmount.Text = table.Rows[0][4].ToString();
                             //img
                             if (table.Rows[0][5] == DBNull.Value)
@@ -242,7 +242,7 @@ namespace Library_Manager
                     {
                         try
                         {
-                            DataTable table = Book.findBookByName(txtName.Text);
+                            table = Book.findBookByName(txtName.Text);
                             txtSerial.Text = table.Rows[0][0].ToString();
                             txtName.Text = table.Rows[0][1].ToString();
                             txtAuthor.Text = table.Rows[0][2].ToString();
@@ -251,7 +251,7 @@ namespace Library_Manager
                             //img
                             try
                             {
-                                if (table.Rows[0][5] == null)
+                                if (table.Rows[0][5] == DBNull.Value)
                                 {
                                     ptbImg.Image = ptbImg.InitialImage;
                                 }
@@ -307,16 +307,19 @@ namespace Library_Manager
                     #region SỬA
                     if (MessageBox.Show("Bạn có chắc muốn sửa thông tin của sách?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
-                        if ((txtAuthor.TextLength * txtName.TextLength * txtPH.TextLength * txtSerial.TextLength * txtTag.TextLength * imgLogcation.Length) == 0)
+                        if ((txtAuthor.TextLength * txtName.TextLength * txtPH.TextLength * txtSerial.TextLength * txtTag.TextLength)==0 || (imgLogcation.Length == 0 && table.Rows[0][5] == DBNull.Value))
                         {
                             MessageBox.Show("Bạn cần điền đầy đủ thông tin cho sách", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            if (Book.updateBook(txtSerial.Text, txtName.Text, txtAuthor.Text, txtPH.Text, (int)txtAmount.Value, imgLogcation, txtTag.Text))
-                                MessageBox.Show("Sửa sách thành công!", "Thành công");
-                            else
-                                MessageBox.Show("Sửa sách thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            if (!Book.updateBook(txtSerial.Text, txtName.Text, txtAuthor.Text, txtPH.Text, (int)txtAmount.Value, imgLogcation, txtTag.Text))
+                                if (!Book.updateBook(txtSerial.Text, txtName.Text, txtAuthor.Text, txtPH.Text, (int)txtAmount.Value, (byte[])table.Rows[0][5], txtTag.Text))
+                                {
+                                    MessageBox.Show("Sửa sách thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    break;
+                                }
+                            MessageBox.Show("Sửa sách thành công!", "Thành công");
                         }
                     }
                     break;

@@ -1,6 +1,6 @@
 ﻿namespace Library_Manager
 {
-    partial class BookForm
+    partial class StudentForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentForm));
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -61,15 +61,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.timeSystem = new System.Windows.Forms.Timer(this.components);
-            this.txtSerial = new System.Windows.Forms.TextBox();
+            this.txtId = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.txtAuthor = new System.Windows.Forms.TextBox();
-            this.txtPH = new System.Windows.Forms.TextBox();
-            this.txtAmount = new System.Windows.Forms.NumericUpDown();
-            this.txtTag = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.txtPhone = new System.Windows.Forms.TextBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.lblMode = new System.Windows.Forms.ToolStripLabel();
             this.lblAccount = new System.Windows.Forms.ToolStripLabel();
@@ -87,12 +83,11 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnReset = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.rbtnFindbySerial = new System.Windows.Forms.RadioButton();
+            this.rbtnFindbyId = new System.Windows.Forms.RadioButton();
             this.rbtnFindbyName = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbImg)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtAmount)).BeginInit();
             this.toolStrip2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -121,7 +116,7 @@
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
             this.barDockControlTop.Margin = new System.Windows.Forms.Padding(4);
-            this.barDockControlTop.Size = new System.Drawing.Size(962, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(904, 0);
             // 
             // barDockControlBottom
             // 
@@ -130,7 +125,7 @@
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 685);
             this.barDockControlBottom.Manager = this.barManager1;
             this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(4);
-            this.barDockControlBottom.Size = new System.Drawing.Size(962, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(904, 0);
             // 
             // barDockControlLeft
             // 
@@ -145,35 +140,35 @@
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(962, 0);
+            this.barDockControlRight.Location = new System.Drawing.Point(904, 0);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Margin = new System.Windows.Forms.Padding(4);
             this.barDockControlRight.Size = new System.Drawing.Size(0, 685);
             // 
             // barLargeButtonItem1
             // 
-            this.barLargeButtonItem1.Caption = "Tìm sách";
+            this.barLargeButtonItem1.Caption = "Tìm sinh viên";
             this.barLargeButtonItem1.Id = 0;
             this.barLargeButtonItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem1.ImageOptions.LargeImage")));
             this.barLargeButtonItem1.Name = "barLargeButtonItem1";
             // 
             // barLargeButtonItem2
             // 
-            this.barLargeButtonItem2.Caption = "Thêm sách";
+            this.barLargeButtonItem2.Caption = "Thêm sinh viên";
             this.barLargeButtonItem2.Id = 1;
             this.barLargeButtonItem2.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem2.ImageOptions.LargeImage")));
             this.barLargeButtonItem2.Name = "barLargeButtonItem2";
             // 
             // barLargeButtonItem3
             // 
-            this.barLargeButtonItem3.Caption = "Xóa sách";
+            this.barLargeButtonItem3.Caption = "Xóa sinh viên";
             this.barLargeButtonItem3.Id = 2;
             this.barLargeButtonItem3.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem3.ImageOptions.LargeImage")));
             this.barLargeButtonItem3.Name = "barLargeButtonItem3";
             // 
             // barLargeButtonItem4
             // 
-            this.barLargeButtonItem4.Caption = "Cập nhật sách";
+            this.barLargeButtonItem4.Caption = "Cập nhật sinh viên";
             this.barLargeButtonItem4.Id = 3;
             this.barLargeButtonItem4.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem4.ImageOptions.LargeImage")));
             this.barLargeButtonItem4.Name = "barLargeButtonItem4";
@@ -210,7 +205,7 @@
             this.tiệnÍchToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(962, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(904, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -226,13 +221,13 @@
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
             // thoátToolStripMenuItem
             // 
             this.thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
-            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.thoátToolStripMenuItem.Text = "Thoát";
             this.thoátToolStripMenuItem.Click += new System.EventHandler(this.thoátToolStripMenuItem_Click);
             // 
@@ -303,7 +298,7 @@
             this.ptbImg.ErrorImage = ((System.Drawing.Image)(resources.GetObject("ptbImg.ErrorImage")));
             this.ptbImg.Image = ((System.Drawing.Image)(resources.GetObject("ptbImg.Image")));
             this.ptbImg.InitialImage = ((System.Drawing.Image)(resources.GetObject("ptbImg.InitialImage")));
-            this.ptbImg.Location = new System.Drawing.Point(540, 150);
+            this.ptbImg.Location = new System.Drawing.Point(510, 150);
             this.ptbImg.Name = "ptbImg";
             this.ptbImg.Size = new System.Drawing.Size(330, 420);
             this.ptbImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -317,7 +312,7 @@
             // 
             // btnAddImage
             // 
-            this.btnAddImage.Location = new System.Drawing.Point(660, 600);
+            this.btnAddImage.Location = new System.Drawing.Point(630, 600);
             this.btnAddImage.Name = "btnAddImage";
             this.btnAddImage.Size = new System.Drawing.Size(90, 30);
             this.btnAddImage.TabIndex = 7;
@@ -330,54 +325,36 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(60, 150);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 19);
+            this.label1.Size = new System.Drawing.Size(85, 19);
             this.label1.TabIndex = 16;
-            this.label1.Text = "Mã sách";
+            this.label1.Text = "Mã sinh viên";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(60, 210);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 19);
+            this.label2.Size = new System.Drawing.Size(87, 19);
             this.label2.TabIndex = 17;
-            this.label2.Text = "Tên sách";
+            this.label2.Text = "Tên sinh viên";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(60, 270);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 19);
+            this.label3.Size = new System.Drawing.Size(42, 19);
             this.label3.TabIndex = 18;
-            this.label3.Text = "Tác giả";
+            this.label3.Text = "Email";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(60, 330);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 19);
+            this.label4.Size = new System.Drawing.Size(88, 19);
             this.label4.TabIndex = 19;
-            this.label4.Text = "Nhà xuất bản";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(60, 390);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 19);
-            this.label5.TabIndex = 20;
-            this.label5.Text = "Số lượng";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(60, 450);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(57, 19);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Thể loại";
+            this.label4.Text = "Số điện thoại";
             // 
             // timeSystem
             // 
@@ -385,16 +362,16 @@
             this.timeSystem.Interval = 1000;
             this.timeSystem.Tick += new System.EventHandler(this.timeSystem_Tick);
             // 
-            // txtSerial
+            // txtId
             // 
-            this.txtSerial.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.txtSerial.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtSerial.Location = new System.Drawing.Point(180, 150);
-            this.txtSerial.MaxLength = 15;
-            this.txtSerial.Name = "txtSerial";
-            this.txtSerial.Size = new System.Drawing.Size(270, 26);
-            this.txtSerial.TabIndex = 1;
-            this.txtSerial.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
+            this.txtId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtId.Location = new System.Drawing.Point(180, 150);
+            this.txtId.MaxLength = 15;
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(270, 26);
+            this.txtId.TabIndex = 1;
+            this.txtId.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
             // txtName
             // 
@@ -407,47 +384,22 @@
             this.txtName.TabIndex = 2;
             this.txtName.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
-            // txtAuthor
+            // txtEmail
             // 
-            this.txtAuthor.Location = new System.Drawing.Point(180, 270);
-            this.txtAuthor.Name = "txtAuthor";
-            this.txtAuthor.Size = new System.Drawing.Size(270, 26);
-            this.txtAuthor.TabIndex = 3;
-            this.txtAuthor.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
+            this.txtEmail.Location = new System.Drawing.Point(180, 270);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(270, 26);
+            this.txtEmail.TabIndex = 3;
+            this.txtEmail.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
-            // txtPH
+            // txtPhone
             // 
-            this.txtPH.Location = new System.Drawing.Point(180, 330);
-            this.txtPH.Name = "txtPH";
-            this.txtPH.Size = new System.Drawing.Size(270, 26);
-            this.txtPH.TabIndex = 4;
-            this.txtPH.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
-            // 
-            // txtAmount
-            // 
-            this.txtAmount.Location = new System.Drawing.Point(180, 390);
-            this.txtAmount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.txtAmount.Name = "txtAmount";
-            this.txtAmount.Size = new System.Drawing.Size(60, 26);
-            this.txtAmount.TabIndex = 5;
-            this.txtAmount.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // txtTag
-            // 
-            this.txtTag.Location = new System.Drawing.Point(180, 450);
-            this.txtTag.Multiline = true;
-            this.txtTag.Name = "txtTag";
-            this.txtTag.Size = new System.Drawing.Size(270, 120);
-            this.txtTag.TabIndex = 6;
-            this.txtTag.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
+            this.txtPhone.Location = new System.Drawing.Point(180, 330);
+            this.txtPhone.MaxLength = 13;
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(270, 26);
+            this.txtPhone.TabIndex = 4;
+            this.txtPhone.TextChanged += new System.EventHandler(this.VerifyInputPhone_TextChanged);
             // 
             // toolStrip2
             // 
@@ -462,7 +414,7 @@
             this.toolStrip2.Location = new System.Drawing.Point(0, 655);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip2.Size = new System.Drawing.Size(962, 30);
+            this.toolStrip2.Size = new System.Drawing.Size(904, 30);
             this.toolStrip2.TabIndex = 36;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -612,51 +564,47 @@
             this.btnReset});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(962, 96);
+            this.toolStrip1.Size = new System.Drawing.Size(904, 96);
             this.toolStrip1.TabIndex = 37;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // rbtnFindbySerial
+            // rbtnFindbyId
             // 
-            this.rbtnFindbySerial.AutoSize = true;
-            this.rbtnFindbySerial.Location = new System.Drawing.Point(180, 180);
-            this.rbtnFindbySerial.Name = "rbtnFindbySerial";
-            this.rbtnFindbySerial.Size = new System.Drawing.Size(136, 23);
-            this.rbtnFindbySerial.TabIndex = 42;
-            this.rbtnFindbySerial.TabStop = true;
-            this.rbtnFindbySerial.Text = "Tìm bằng mã sách";
-            this.rbtnFindbySerial.UseVisualStyleBackColor = true;
-            this.rbtnFindbySerial.CheckedChanged += new System.EventHandler(this.rbtnFindbySerial_CheckedChanged);
+            this.rbtnFindbyId.AutoSize = true;
+            this.rbtnFindbyId.Location = new System.Drawing.Point(180, 180);
+            this.rbtnFindbyId.Name = "rbtnFindbyId";
+            this.rbtnFindbyId.Size = new System.Drawing.Size(160, 23);
+            this.rbtnFindbyId.TabIndex = 42;
+            this.rbtnFindbyId.TabStop = true;
+            this.rbtnFindbyId.Text = "Tìm bằng mã sinh viên";
+            this.rbtnFindbyId.UseVisualStyleBackColor = true;
+            this.rbtnFindbyId.CheckedChanged += new System.EventHandler(this.rbtnFindbyId_CheckedChanged);
             // 
             // rbtnFindbyName
             // 
             this.rbtnFindbyName.AutoSize = true;
             this.rbtnFindbyName.Location = new System.Drawing.Point(180, 240);
             this.rbtnFindbyName.Name = "rbtnFindbyName";
-            this.rbtnFindbyName.Size = new System.Drawing.Size(136, 23);
+            this.rbtnFindbyName.Size = new System.Drawing.Size(160, 23);
             this.rbtnFindbyName.TabIndex = 43;
             this.rbtnFindbyName.TabStop = true;
-            this.rbtnFindbyName.Text = "Tìm bằng tên sách";
+            this.rbtnFindbyName.Text = "Tìm bằng tên sinh viên";
             this.rbtnFindbyName.UseVisualStyleBackColor = true;
             // 
-            // BookForm
+            // StudentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 685);
+            this.ClientSize = new System.Drawing.Size(904, 685);
             this.Controls.Add(this.rbtnFindbyName);
-            this.Controls.Add(this.rbtnFindbySerial);
+            this.Controls.Add(this.rbtnFindbyId);
             this.Controls.Add(this.btnMode);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStrip2);
-            this.Controls.Add(this.txtTag);
-            this.Controls.Add(this.txtAmount);
-            this.Controls.Add(this.txtPH);
-            this.Controls.Add(this.txtAuthor);
+            this.Controls.Add(this.txtPhone);
+            this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.txtName);
-            this.Controls.Add(this.txtSerial);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtId);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -673,15 +621,14 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "BookForm";
-            this.Text = "Thao tác với sách";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BookForm_FormClosing);
-            this.Load += new System.EventHandler(this.BookForm_Load);
+            this.Name = "StudentForm";
+            this.Text = "Thao tác với tài khoản";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StudentForm_FormClosing);
+            this.Load += new System.EventHandler(this.StudentForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbImg)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtAmount)).EndInit();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -708,15 +655,10 @@
         private System.Windows.Forms.PictureBox ptbImg;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.OpenFileDialog oFDImage;
-        //private DevExpress.XtraBars.BarStaticItem txtTime;
-        private System.Windows.Forms.TextBox txtTag;
-        private System.Windows.Forms.NumericUpDown txtAmount;
-        private System.Windows.Forms.TextBox txtPH;
-        private System.Windows.Forms.TextBox txtAuthor;
+        private System.Windows.Forms.TextBox txtPhone;
+        private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.TextBox txtSerial;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -752,6 +694,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton btnReset;
         private System.Windows.Forms.RadioButton rbtnFindbyName;
-        private System.Windows.Forms.RadioButton rbtnFindbySerial;
+        private System.Windows.Forms.RadioButton rbtnFindbyId;
     }
 }

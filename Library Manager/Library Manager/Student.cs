@@ -29,17 +29,6 @@ namespace Library_Manager
             return res;
         }
 
-        public static DataTable findStudentByName(string name)
-        {
-            string cmd = "";
-            if (name.Length > 0)
-            {
-                cmd = string.Format("SELECT * FROM STUDENT WHERE NAME LIKE N'{0}'", name);
-                return Utility.DATABASECONNECTION.Execute(cmd);
-            }
-            return null;
-        }
-
         public static DataTable findStudentById(string id)
         {
             string cmd = "";
@@ -54,9 +43,7 @@ namespace Library_Manager
         public static bool insertStudent(string id, string name, string phone, string email, string imageLoc)
         {
             string cmd = string.Format("SELECT ID FROM STUDENT WHERE ID = '{0}'", id);
-            string cmd2 = string.Format("SELECT NAME FROM STUDENT WHERE NAME LIKE N'{0}'", name);
-            int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count + Utility.DATABASECONNECTION.Execute(cmd2).Rows.Count;
-            if (rowsCount > 0)
+            if (Utility.DATABASECONNECTION.Execute(cmd).Rows.Count > 0)
             {
                 return false;
             }
@@ -86,8 +73,7 @@ namespace Library_Manager
         public static bool updateStudent(string id, string name, string phone, string email, string imageLoc)
         {
             string cmd = string.Format("SELECT ID FROM STUDENT WHERE ID = '{0}'", id);
-            int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count;
-            if (rowsCount == 0)
+            if (Utility.DATABASECONNECTION.Execute(cmd).Rows.Count == 0)
             {
                 return false;
             }

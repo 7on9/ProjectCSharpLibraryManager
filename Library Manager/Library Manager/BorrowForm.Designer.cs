@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ComboBox comboBox1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BorrowFrom));
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
@@ -56,7 +57,7 @@
             this.oFDImage = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.timeSystem = new System.Windows.Forms.Timer(this.components);
-            this.txtId = new System.Windows.Forms.TextBox();
+            this.txtIdStudent = new System.Windows.Forms.TextBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.lblMode = new System.Windows.Forms.ToolStripLabel();
             this.lblAccount = new System.Windows.Forms.ToolStripLabel();
@@ -73,25 +74,48 @@
             this.btnReset = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtIdBorrow = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colNameOfBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.dtgvCart = new System.Windows.Forms.DataGridView();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.txtIdBook = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtComment = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtAmount = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnFullCancel = new System.Windows.Forms.Button();
+            this.rbtnFindbyIdBorrow = new System.Windows.Forms.RadioButton();
+            this.rbtnFindbyIdStudent = new System.Windows.Forms.RadioButton();
+            this.label = new System.Windows.Forms.Label();
+            this.lblQuantum = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.colSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNameOfBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgvCart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAmount)).BeginInit();
             this.SuspendLayout();
+            // 
+            // comboBox1
+            // 
+            comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] {
+            "1 tuần",
+            "2 tuần",
+            "3 tuần",
+            "4 tuần"});
+            comboBox1.Location = new System.Drawing.Point(660, 210);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new System.Drawing.Size(121, 27);
+            comboBox1.TabIndex = 72;
             // 
             // barManager1
             // 
@@ -304,16 +328,16 @@
             this.timeSystem.Interval = 1000;
             this.timeSystem.Tick += new System.EventHandler(this.timeSystem_Tick);
             // 
-            // txtId
+            // txtIdStudent
             // 
-            this.txtId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.txtId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtId.Location = new System.Drawing.Point(180, 210);
-            this.txtId.MaxLength = 15;
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(300, 26);
-            this.txtId.TabIndex = 1;
-            this.txtId.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
+            this.txtIdStudent.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtIdStudent.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtIdStudent.Location = new System.Drawing.Point(180, 210);
+            this.txtIdStudent.MaxLength = 15;
+            this.txtIdStudent.Name = "txtIdStudent";
+            this.txtIdStudent.Size = new System.Drawing.Size(300, 26);
+            this.txtIdStudent.TabIndex = 1;
+            this.txtIdStudent.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
             // toolStrip2
             // 
@@ -472,17 +496,16 @@
             this.label2.Size = new System.Drawing.Size(78, 19);
             this.label2.TabIndex = 49;
             this.label2.Text = "Sách mượn";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // textBox1
+            // txtIdBorrow
             // 
-            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox1.Location = new System.Drawing.Point(180, 150);
-            this.textBox1.MaxLength = 15;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(300, 26);
-            this.textBox1.TabIndex = 2;
+            this.txtIdBorrow.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtIdBorrow.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtIdBorrow.Location = new System.Drawing.Point(180, 150);
+            this.txtIdBorrow.MaxLength = 15;
+            this.txtIdBorrow.Name = "txtIdBorrow";
+            this.txtIdBorrow.Size = new System.Drawing.Size(300, 26);
+            this.txtIdBorrow.TabIndex = 2;
             // 
             // label3
             // 
@@ -493,54 +516,42 @@
             this.label3.TabIndex = 51;
             this.label3.Text = "Mã thẻ";
             // 
-            // dataGridView1
+            // dtgvCart
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dtgvCart.AllowUserToAddRows = false;
+            this.dtgvCart.AllowUserToDeleteRows = false;
+            this.dtgvCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgvCart.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colSerial,
             this.colNameOfBook,
             this.colAmount});
-            this.dataGridView1.Location = new System.Drawing.Point(540, 300);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(570, 240);
-            this.dataGridView1.TabIndex = 52;
+            this.dtgvCart.Location = new System.Drawing.Point(540, 300);
+            this.dtgvCart.Name = "dtgvCart";
+            this.dtgvCart.ReadOnly = true;
+            this.dtgvCart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dtgvCart.Size = new System.Drawing.Size(570, 240);
+            this.dtgvCart.TabIndex = 52;
             // 
-            // colNameOfBook
+            // btnAdd
             // 
-            this.colNameOfBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colNameOfBook.FillWeight = 500F;
-            this.colNameOfBook.HeaderText = "Tên sách";
-            this.colNameOfBook.Name = "colNameOfBook";
-            this.colNameOfBook.ReadOnly = true;
-            this.colNameOfBook.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnAdd.Location = new System.Drawing.Point(1050, 150);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(60, 30);
+            this.btnAdd.TabIndex = 5;
+            this.btnAdd.Text = "Thêm";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // colAmount
+            // txtIdBook
             // 
-            this.colAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colAmount.HeaderText = "Số lượng";
-            this.colAmount.Name = "colAmount";
-            this.colAmount.ReadOnly = true;
-            this.colAmount.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1020, 150);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 90);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Thêm";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.textBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox2.Location = new System.Drawing.Point(660, 150);
-            this.textBox2.MaxLength = 15;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(300, 26);
-            this.textBox2.TabIndex = 3;
+            this.txtIdBook.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtIdBook.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtIdBook.Location = new System.Drawing.Point(660, 150);
+            this.txtIdBook.MaxLength = 15;
+            this.txtIdBook.Name = "txtIdBook";
+            this.txtIdBook.Size = new System.Drawing.Size(270, 26);
+            this.txtIdBook.TabIndex = 3;
+            this.txtIdBook.TextChanged += new System.EventHandler(this.txtIdBook_TextChanged);
             // 
             // label4
             // 
@@ -551,16 +562,16 @@
             this.label4.TabIndex = 55;
             this.label4.Text = "Mã sách";
             // 
-            // textBox3
+            // txtComment
             // 
-            this.textBox3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.textBox3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox3.Location = new System.Drawing.Point(180, 270);
-            this.textBox3.MaxLength = 15;
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(300, 270);
-            this.textBox3.TabIndex = 6;
+            this.txtComment.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtComment.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtComment.Location = new System.Drawing.Point(180, 270);
+            this.txtComment.MaxLength = 15;
+            this.txtComment.Multiline = true;
+            this.txtComment.Name = "txtComment";
+            this.txtComment.Size = new System.Drawing.Size(300, 270);
+            this.txtComment.TabIndex = 6;
             // 
             // label5
             // 
@@ -573,7 +584,7 @@
             // 
             // txtAmount
             // 
-            this.txtAmount.Location = new System.Drawing.Point(660, 210);
+            this.txtAmount.Location = new System.Drawing.Point(960, 150);
             this.txtAmount.Minimum = new decimal(new int[] {
             1,
             0,
@@ -593,30 +604,133 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(540, 210);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 19);
+            this.label6.Size = new System.Drawing.Size(103, 19);
             this.label6.TabIndex = 59;
-            this.label6.Text = "Số lượng";
+            this.label6.Text = "Thời gian mượn";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(630, 570);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(150, 30);
+            this.btnCancel.TabIndex = 64;
+            this.btnCancel.Text = "Bỏ mượn";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnFullCancel
+            // 
+            this.btnFullCancel.Location = new System.Drawing.Point(870, 570);
+            this.btnFullCancel.Name = "btnFullCancel";
+            this.btnFullCancel.Size = new System.Drawing.Size(150, 30);
+            this.btnFullCancel.TabIndex = 65;
+            this.btnFullCancel.Text = "Bỏ mượn toàn bộ";
+            this.btnFullCancel.UseVisualStyleBackColor = true;
+            this.btnFullCancel.Click += new System.EventHandler(this.btnFullCancel_Click);
+            // 
+            // rbtnFindbyIdBorrow
+            // 
+            this.rbtnFindbyIdBorrow.AutoSize = true;
+            this.rbtnFindbyIdBorrow.Location = new System.Drawing.Point(180, 180);
+            this.rbtnFindbyIdBorrow.Name = "rbtnFindbyIdBorrow";
+            this.rbtnFindbyIdBorrow.Size = new System.Drawing.Size(166, 23);
+            this.rbtnFindbyIdBorrow.TabIndex = 71;
+            this.rbtnFindbyIdBorrow.TabStop = true;
+            this.rbtnFindbyIdBorrow.Text = "Tìm bằng mã thẻ mượn";
+            this.rbtnFindbyIdBorrow.UseVisualStyleBackColor = true;
+            this.rbtnFindbyIdBorrow.Visible = false;
+            this.rbtnFindbyIdBorrow.CheckedChanged += new System.EventHandler(this.rbtnFindbyIdBorrow_CheckedChanged);
+            // 
+            // rbtnFindbyIdStudent
+            // 
+            this.rbtnFindbyIdStudent.AutoSize = true;
+            this.rbtnFindbyIdStudent.Location = new System.Drawing.Point(180, 240);
+            this.rbtnFindbyIdStudent.Name = "rbtnFindbyIdStudent";
+            this.rbtnFindbyIdStudent.Size = new System.Drawing.Size(160, 23);
+            this.rbtnFindbyIdStudent.TabIndex = 70;
+            this.rbtnFindbyIdStudent.TabStop = true;
+            this.rbtnFindbyIdStudent.Text = "Tìm bằng mã sinh viên";
+            this.rbtnFindbyIdStudent.UseVisualStyleBackColor = true;
+            this.rbtnFindbyIdStudent.Visible = false;
+            // 
+            // label
+            // 
+            this.label.AutoSize = true;
+            this.label.Location = new System.Drawing.Point(660, 180);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(56, 19);
+            this.label.TabIndex = 77;
+            this.label.Text = "Còn lại ";
+            // 
+            // lblQuantum
+            // 
+            this.lblQuantum.AutoSize = true;
+            this.lblQuantum.Location = new System.Drawing.Point(720, 180);
+            this.lblQuantum.Name = "lblQuantum";
+            this.lblQuantum.Size = new System.Drawing.Size(17, 19);
+            this.lblQuantum.TabIndex = 78;
+            this.lblQuantum.Text = "0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(750, 180);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(132, 19);
+            this.label8.TabIndex = 79;
+            this.label8.Text = "quyển trong thư viện";
+            // 
+            // colSerial
+            // 
+            this.colSerial.HeaderText = "Serial";
+            this.colSerial.Name = "colSerial";
+            this.colSerial.ReadOnly = true;
+            // 
+            // colNameOfBook
+            // 
+            this.colNameOfBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colNameOfBook.FillWeight = 350F;
+            this.colNameOfBook.HeaderText = "Tên sách";
+            this.colNameOfBook.Name = "colNameOfBook";
+            this.colNameOfBook.ReadOnly = true;
+            this.colNameOfBook.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // colAmount
+            // 
+            this.colAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colAmount.HeaderText = "Số lượng";
+            this.colAmount.Name = "colAmount";
+            this.colAmount.ReadOnly = true;
+            this.colAmount.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // BorrowFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 662);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.lblQuantum);
+            this.Controls.Add(this.label);
+            this.Controls.Add(comboBox1);
+            this.Controls.Add(this.rbtnFindbyIdBorrow);
+            this.Controls.Add(this.rbtnFindbyIdStudent);
+            this.Controls.Add(this.btnFullCancel);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtComment);
+            this.Controls.Add(this.txtIdBook);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.dtgvCart);
+            this.Controls.Add(this.txtIdBorrow);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnMode);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStrip2);
-            this.Controls.Add(this.txtId);
+            this.Controls.Add(this.txtIdStudent);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.barDockControlLeft);
@@ -639,7 +753,7 @@
             this.toolStrip2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgvCart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -661,7 +775,7 @@
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem6;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.OpenFileDialog oFDImage;
-        private System.Windows.Forms.TextBox txtId;
+        private System.Windows.Forms.TextBox txtIdStudent;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timeSystem;
         private DevExpress.XtraBars.BarStaticItem barStaticItem1;
@@ -692,16 +806,24 @@
         private System.Windows.Forms.ToolStripButton btnReset;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtComment;
+        private System.Windows.Forms.TextBox txtIdBook;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNameOfBook;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAmount;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.DataGridView dtgvCart;
+        private System.Windows.Forms.TextBox txtIdBorrow;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown txtAmount;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnFullCancel;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.RadioButton rbtnFindbyIdBorrow;
+        private System.Windows.Forms.RadioButton rbtnFindbyIdStudent;
+        private System.Windows.Forms.Label label;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblQuantum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSerial;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNameOfBook;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAmount;
     }
 }

@@ -25,15 +25,8 @@ namespace Library_Manager
         {
             lblTimeSys.Text = " | " + DateTime.Now.ToLongTimeString();
         }
-
-        private void BookForm_Load(object sender, EventArgs e)
+        private void setAutoComplete()
         {
-            lblAccount.Text = Utility.ACCOUNT;
-            setLabel("chưa chọn");
-            setButton("", false);
-            rbtnFindbySerial.Visible = rbtnFindbyName.Visible = false;
-            //set txt source
-            //name
             txtName.AutoCompleteMode = txtAuthor.AutoCompleteMode = txtSerial.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             txtSerial.AutoCompleteSource = AutoCompleteSource.CustomSource;
             var txtNameAutoCompleteCustomsource = new AutoCompleteStringCollection();
@@ -45,6 +38,16 @@ namespace Library_Manager
             var txtSerialAutoCompleteCustomsource = new AutoCompleteStringCollection();
             txtSerialAutoCompleteCustomsource.AddRange(Book.getBookSerial());
             txtSerial.AutoCompleteCustomSource = txtSerialAutoCompleteCustomsource;
+        }
+        private void BookForm_Load(object sender, EventArgs e)
+        {
+            lblAccount.Text = Utility.ACCOUNT;
+            setLabel("chưa chọn");
+            setButton("", false);
+            rbtnFindbySerial.Visible = rbtnFindbyName.Visible = false;
+            //set txt source
+            //name
+            setAutoComplete();
         }
 
         private void setButton(string btn, bool status)
@@ -277,6 +280,7 @@ namespace Library_Manager
                             MessageBox.Show("Không tìm thấy sách", "Thất bại!");
                         }
                     }
+                    setAutoComplete();
                     #endregion TÌM
                     break;
                 case "Thêm":
@@ -291,6 +295,7 @@ namespace Library_Manager
                         else
                             MessageBox.Show("Thêm sách thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     #endregion THÊM
+                    setAutoComplete();
                     break;
                 case "Xóa":
                     if (MessageBox.Show("Bạn có chắc muốn xóa sách?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -302,6 +307,7 @@ namespace Library_Manager
                         else
                             MessageBox.Show("Không xóa được sách", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    setAutoComplete();
                     break;
                 case "Sửa":
                     #region SỬA
@@ -322,6 +328,7 @@ namespace Library_Manager
                             MessageBox.Show("Sửa sách thành công!", "Thành công");
                         }
                     }
+                    setAutoComplete();
                     break;
                     #endregion SỬA
                 default:
@@ -341,6 +348,7 @@ namespace Library_Manager
             setButton("", false);
             imgLogcation = "";
             clear();
+            setAutoComplete();
         }
 
         private void BookForm_FormClosing(object sender, FormClosingEventArgs e)

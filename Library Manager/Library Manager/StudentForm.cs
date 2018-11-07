@@ -27,14 +27,8 @@ namespace Library_Manager
             lblTimeSys.Text = " | " + DateTime.Now.ToLongTimeString();
         }
 
-        private void StudentForm_Load(object sender, EventArgs e)
+        private void setAutoComplete()
         {
-            lblAccount.Text = Utility.ACCOUNT;
-            setLabel("chưa chọn");
-            setButton("", false);
-            rbtnFindbyId.Visible = rbtnFindbyName.Visible = false;
-            //set txt source
-            //name
             txtName.AutoCompleteMode = txtEmail.AutoCompleteMode = txtId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             txtId.AutoCompleteSource = AutoCompleteSource.CustomSource;
             var txtNameAutoCompleteCustomsource = new AutoCompleteStringCollection();
@@ -46,6 +40,17 @@ namespace Library_Manager
             var txtIdAutoCompleteCustomsource = new AutoCompleteStringCollection();
             txtIdAutoCompleteCustomsource.AddRange(Student.getStudentId());
             txtId.AutoCompleteCustomSource = txtIdAutoCompleteCustomsource;
+        }
+
+        private void StudentForm_Load(object sender, EventArgs e)
+        {
+            lblAccount.Text = Utility.ACCOUNT;
+            setLabel("chưa chọn");
+            setButton("", false);
+            rbtnFindbyId.Visible = rbtnFindbyName.Visible = false;
+            //set txt source
+            //name
+            setAutoComplete();
         }
 
         private void setButton(string btn, bool status)
@@ -64,7 +69,7 @@ namespace Library_Manager
                     txtEmail.Enabled = txtPhone.Enabled = !status;
                     //Set rbtn find
                     rbtnFindbyId.Select();
-                    rbtnFindbyName.Visible = rbtnFindbyId.Visible = true;
+                    rbtnFindbyName.Visible = rbtnFindbyId.Visible = false;
                     txtName.Enabled = false;
                     break;
                     #endregion FIND
@@ -238,42 +243,43 @@ namespace Library_Manager
                     }
                     else
                     {
-                        try
-                        {
-                            table = Student.findStudentByName(txtName.Text);
-                            txtId.Text = table.Rows[0][0].ToString();
-                            txtName.Text = table.Rows[0][1].ToString();
-                            txtPhone.Text = table.Rows[0][2].ToString();
-                            txtEmail.Text = table.Rows[0][3].ToString();
-                            //img
-                            try
-                            {
-                                if (table.Rows[0][4] == DBNull.Value)
-                                {
-                                    ptbImg.Image = ptbImg.InitialImage;
-                                }
-                                else
-                                {
-                                    byte[] img = (byte[])table.Rows[0][4];
-                                    MemoryStream ms = new MemoryStream(img);
-                                    ptbImg.Image = Image.FromStream(ms);
-                                }
-                                //
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.Message);
-                            }
-                            tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = true;
-                            xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            clear();
-                            MessageBox.Show("Không tìm thấy sinh viên \n Lỗi : " + ex.Message , "Thất bại!");
-                        }
+                        //try
+                        //{
+                        //    table = Student.findStudentByName(txtName.Text);
+                        //    txtId.Text = table.Rows[0][0].ToString();
+                        //    txtName.Text = table.Rows[0][1].ToString();
+                        //    txtPhone.Text = table.Rows[0][2].ToString();
+                        //    txtEmail.Text = table.Rows[0][3].ToString();
+                        //    //img
+                        //    try
+                        //    {
+                        //        if (table.Rows[0][4] == DBNull.Value)
+                        //        {
+                        //            ptbImg.Image = ptbImg.InitialImage;
+                        //        }
+                        //        else
+                        //        {
+                        //            byte[] img = (byte[])table.Rows[0][4];
+                        //            MemoryStream ms = new MemoryStream(img);
+                        //            ptbImg.Image = Image.FromStream(ms);
+                        //        }
+                        //        //
+                        //    }
+                        //    catch (Exception ex)
+                        //    {
+                        //        Console.WriteLine(ex.Message);
+                        //    }
+                        //    tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = true;
+                        //    xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = true;
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    clear();
+                        //    MessageBox.Show("Không tìm thấy sinh viên \n Lỗi : " + ex.Message , "Thất bại!");
+                        //}
                     }
                     #endregion TÌM
+                    setAutoComplete();
                     break;
                 case "Thêm":
                     #region THÊM
@@ -292,6 +298,7 @@ namespace Library_Manager
                         else
                             MessageBox.Show("Thêm sinh viên thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     #endregion THÊM
+                    setAutoComplete();
                     break;
                 case "Xóa":
                     if (MessageBox.Show("Bạn có chắc muốn xóa sinh viên?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -303,6 +310,7 @@ namespace Library_Manager
                         else
                             MessageBox.Show("Không xóa được sinh viên", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    setAutoComplete();
                     break;
                 case "Sửa":
                     #region SỬA
@@ -329,6 +337,7 @@ namespace Library_Manager
 
                         }
                     }
+                    setAutoComplete();
                     break;
                     #endregion SỬA
                 default:
@@ -348,6 +357,7 @@ namespace Library_Manager
             setButton("", false);
             imgLogcation = "";
             clear();
+            setAutoComplete();
         }
 
         private void StudentForm_FormClosing(object sender, FormClosingEventArgs e)

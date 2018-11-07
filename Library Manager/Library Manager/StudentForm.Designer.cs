@@ -578,6 +578,7 @@
             this.rbtnFindbyId.TabStop = true;
             this.rbtnFindbyId.Text = "Tìm bằng mã sinh viên";
             this.rbtnFindbyId.UseVisualStyleBackColor = true;
+            this.rbtnFindbyId.Visible = false;
             this.rbtnFindbyId.CheckedChanged += new System.EventHandler(this.rbtnFindbyId_CheckedChanged);
             // 
             // rbtnFindbyName
@@ -590,6 +591,7 @@
             this.rbtnFindbyName.TabStop = true;
             this.rbtnFindbyName.Text = "Tìm bằng tên sinh viên";
             this.rbtnFindbyName.UseVisualStyleBackColor = true;
+            this.rbtnFindbyName.Visible = false;
             // 
             // StudentForm
             // 

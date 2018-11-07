@@ -20,7 +20,16 @@ namespace Library_Manager
                 res[i] = dataTable.Rows[i][0].ToString();
             return res;
         }
-
+        public static bool haveBook(string id)
+        {
+            string cmd = "";
+            if (id.Length > 0)
+            {
+                cmd = string.Format("SELECT ID FROM BOOK WHERE ID = '{0}'", id);
+                return Utility.DATABASECONNECTION.Execute(cmd).Rows.Count > 0 ? true : false;
+            }
+            return false;
+        }
         public static string[] getBookSerial()
         {
             DataTable dataTable = Utility.DATABASECONNECTION.Execute("SELECT * FROM FUNCTION_GET_ALL_BOOK_SERIAL()");
@@ -46,7 +55,7 @@ namespace Library_Manager
             string cmd = "";
             if (serial.Length > 0)
             {
-                cmd = string.Format("SELECT * FROM BOOK WHERE SERIAL LIKE '{0}'", serial);
+                cmd = string.Format("SELECT * FROM BOOK WHERE SERIAL = '{0}'", serial);
                 return Utility.DATABASECONNECTION.Execute(cmd);
             }
             return null;
@@ -157,6 +166,28 @@ namespace Library_Manager
                 return false;
             }
             return true;
+        }
+
+        public static string getBookNameBySerial(string serial)
+        {
+            string cmd = "";
+            if (serial.Length > 0)
+            {
+                cmd = string.Format("SELECT NAME FROM BOOK WHERE SERIAL = '{0}'", serial);
+                return Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString();
+            }
+            return null;
+        }
+
+        public static string getBookQuantumBySerial(string serial)
+        {
+            string cmd = "";
+            if (serial.Length > 0)
+            {
+                cmd = string.Format("SELECT QUANTUM FROM BOOK WHERE SERIAL = '{0}'", serial);
+                return Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString();
+            }
+            return null;
         }
     }
 }

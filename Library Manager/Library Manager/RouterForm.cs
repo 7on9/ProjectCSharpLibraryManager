@@ -102,6 +102,8 @@ namespace Library_Manager
                     case "LogForm":
                         break;
                     case "BorrowForm":
+                        BorrowFrom borrowFrom = new BorrowFrom();
+                        borrowFrom.Show();
                         break;
                 }
             }

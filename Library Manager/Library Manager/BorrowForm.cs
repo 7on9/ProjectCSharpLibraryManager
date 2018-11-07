@@ -14,7 +14,8 @@ namespace Library_Manager
 {
     public partial class BorrowFrom : DevExpress.XtraEditors.XtraForm
     {
-        string imgLogcation = "";
+        List<string> cart;
+        //Map<string, int> cart;
         DataTable table;
 
         public BorrowFrom()
@@ -27,25 +28,36 @@ namespace Library_Manager
             lblTimeSys.Text = " | " + DateTime.Now.ToLongTimeString();
         }
 
+        private void setAutoComplete()
+        {
+            //Id Student
+            txtIdBorrow.AutoCompleteMode = txtIdBook.AutoCompleteMode = txtIdStudent.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtIdStudent.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            var txtIdStudentAutoCompleteCustomsource = new AutoCompleteStringCollection();
+            txtIdStudentAutoCompleteCustomsource.AddRange(Student.getStudentId());
+            txtIdStudent.AutoCompleteCustomSource = txtIdStudentAutoCompleteCustomsource;
+            //Id borrow
+            //txt.AutoCompleteMode = txtEmail.AutoCompleteMode = txtIdStudent.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtIdBorrow.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            var txtIdBorrowAutoCompleteCustomsource = new AutoCompleteStringCollection();
+            txtIdBorrowAutoCompleteCustomsource.AddRange(Borrow.getBorrowId());
+            txtIdStudent.AutoCompleteCustomSource = txtIdBorrowAutoCompleteCustomsource;
+
+            //id Book
+            txtIdBook.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            var txtIdBookAutoCompleteCustomsource = new AutoCompleteStringCollection();
+            txtIdBookAutoCompleteCustomsource.AddRange(Book.getBookSerial());
+            txtIdStudent.AutoCompleteCustomSource = txtIdBookAutoCompleteCustomsource;
+        }
+
         private void StudentForm_Load(object sender, EventArgs e)
         {
             lblAccount.Text = Utility.ACCOUNT;
             setLabel("chưa chọn");
             setButton("", false);
-            rbtnFindbyId.Visible = rbtnFindbyName.Visible = false;
             //set txt source
-            //name
-            txtName.AutoCompleteMode = txtEmail.AutoCompleteMode = txtId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            txtId.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            var txtNameAutoCompleteCustomsource = new AutoCompleteStringCollection();
-            txtNameAutoCompleteCustomsource.AddRange(Student.getStudentName());
-            txtName.AutoCompleteCustomSource = txtNameAutoCompleteCustomsource;
-            //Id
-            txtName.AutoCompleteMode = txtEmail.AutoCompleteMode = txtId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            txtId.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            var txtIdAutoCompleteCustomsource = new AutoCompleteStringCollection();
-            txtIdAutoCompleteCustomsource.AddRange(Student.getStudentId());
-            txtId.AutoCompleteCustomSource = txtIdAutoCompleteCustomsource;
+            lblQuantum.Text = "0";
+            setAutoComplete();
         }
 
         private void setButton(string btn, bool status)
@@ -55,61 +67,53 @@ namespace Library_Manager
                 case "find":
                     #region FIND
                     //set button
-                    btnMode.Enabled = btnReset.Enabled = tsbtnFindMode.Enabled = status; 
+                    btnMode.Enabled = btnReset.Enabled = tsbtnFindMode.Enabled = status;
                     //set menu strip
                     tsbtnAddMode.Enabled = tsbtnDelMode.Enabled = !status;
                     //set tool trip menu
-                    thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = btnAddImage.Enabled = !status;
+                    thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = !status;
                     //set txt no need
-                    txtEmail.Enabled = txtPhone.Enabled = !status;
+                    txtAmount.Enabled = txtComment.Enabled = txtIdBook.Enabled = !status;
                     //Set rbtn find
-                    rbtnFindbyId.Select();
-                    rbtnFindbyName.Visible = rbtnFindbyId.Visible = true;
-                    txtName.Enabled = false;
+                    rbtnFindbyIdBorrow.Select();
+                    rbtnFindbyIdBorrow.Visible = rbtnFindbyIdStudent.Visible = true;
+                    txtIdStudent.Enabled = false;
                     break;
-                    #endregion FIND
+                #endregion FIND
                 case "add":
                     #region ADD
-                
-                    btnAddImage.Enabled = btnMode.Enabled = btnReset.Enabled = tsbtnAddMode.Enabled = status;
 
-                    tsbtnFindMode.Enabled = tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = !status;
+                    btnMode.Enabled = btnReset.Enabled = tsbtnAddMode.Enabled = status;
 
-                    tìmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = !status;
+                    tsbtnFindMode.Enabled = tsbtnDelMode.Enabled = !status;
+
+                    tìmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = !status;
 
                     //set txt need
-                    txtEmail.Enabled = txtPhone.Enabled = txtName.Enabled = status;
+                    txtIdBorrow.Enabled = false;
+                    txtIdStudent.Enabled = txtIdBook.Enabled = txtAmount.Enabled = txtComment.Enabled = status;
                     //Set rbtn find
                     //rbtnFindbyId.Select();
-                    rbtnFindbyName.Visible = rbtnFindbyId.Visible = false;
+                    rbtnFindbyIdBorrow.Visible = rbtnFindbyIdStudent.Visible = false;
                     break;
-                    #endregion ADD
+                #endregion ADD
                 case "del":
                     #region DELETE
-                    btnAddImage.Enabled = !status;
                     btnMode.Enabled = btnReset.Enabled = tsbtnDelMode.Enabled = status;
-                    txtId.Enabled =  txtEmail.Enabled = txtPhone.Enabled =  txtName.Enabled = !status;
-                    tsbtnAddMode.Enabled = tsbtnFindMode.Enabled = tsbtnUpdateMode.Enabled = !status;
-                    thêmToolStripMenuItem.Enabled = tìmToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = !status;
+                    txtIdStudent.Enabled = txtComment.Enabled = txtAmount.Enabled = txtIdBook.Enabled = !status;
+                    tsbtnAddMode.Enabled = tsbtnFindMode.Enabled = !status;
+                    thêmToolStripMenuItem.Enabled = tìmToolStripMenuItem.Enabled = !status;
                     break;
-                    #endregion DELETE
-
-                case "update":
-                    txtId.Enabled = false;
-                    txtEmail.Enabled = txtPhone.Enabled = txtName.Enabled = status;
-                    btnMode.Enabled = btnReset.Enabled = status;
-                    tsbtnAddMode.Enabled = tsbtnDelMode.Enabled = tsbtnFindMode.Enabled = !status;
-                    thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = tìmToolStripMenuItem.Enabled = !status;
-                    break;
+                #endregion DELETE
                 case "":
                     btnMode.Enabled = btnReset.Enabled = status;
                     tsbtnAddMode.Enabled = tsbtnFindMode.Enabled = !status;
                     //must found before del or update
                     tsbtnDelMode.Enabled = status;
-                    tìmToolStripMenuItem.Enabled = thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = 
-                    txtName.Enabled = txtEmail.Enabled = txtId.Enabled = txtPhone.Enabled = !status;
+                    tìmToolStripMenuItem.Enabled = thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = !status;
+                    txtIdBook.Enabled = txtIdStudent.Enabled = txtAmount.Enabled = txtComment.Enabled = !status;
                     //rbtnFindbyId.Select();
-                    rbtnFindbyName.Visible = rbtnFindbyId.Visible = false;
+                    rbtnFindbyIdBorrow.Visible = rbtnFindbyIdStudent.Visible = false;
                     break;
             }
 
@@ -123,9 +127,8 @@ namespace Library_Manager
 
         private void clear()
         {
-            txtEmail.Text = txtName.Text = txtPhone.Text = txtId.Text = "";
-            ptbImg.ImageLocation = null;
-            ptbImg.Image = ptbImg.InitialImage;
+            txtComment.Text = txtIdBook.Text = txtIdBorrow.Text = txtAmount.Text = txtIdStudent.Text = "";
+            lblQuantum.Text = "0";
         }
 
         #region ToolStrip
@@ -148,12 +151,6 @@ namespace Library_Manager
             setButton("del", true);
         }
 
-        private void tsbtnUpdateMode_Click(object sender, EventArgs e)
-        {
-            setLabel("Sửa");
-            setButton("update", true);
-        }
-
         private void tìmToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tsbtnFindMode_Click(sender, e);
@@ -168,37 +165,7 @@ namespace Library_Manager
         {
             tsbtnDelMode_Click(sender, e);
         }
-
-        private void sửaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            tsbtnUpdateMode_Click(sender, e);
-        }
         #endregion ToolStrip
-
-        private void ptbImg_Click(object sender, EventArgs e)
-        {
-            if (btnAddImage.Enabled)
-                btnAddImage_Click(sender, e);
-        }
-
-        private void btnAddImage_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All Files (*.*)|*.*";
-                openFileDialog.Title = "Chọn ảnh";
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    imgLogcation = openFileDialog.FileName.ToString();
-                    ptbImg.ImageLocation = imgLogcation;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
 
         private void btnMode_Click(object sender, EventArgs e)
         {
@@ -206,29 +173,13 @@ namespace Library_Manager
             {
                 case "Tìm":
                     #region TÌM 
-                    if (rbtnFindbyId.Checked)
+                    if (rbtnFindbyIdStudent.Checked)
                     {
                         try
                         {
-                            table = Student.findStudentById(txtId.Text);
-                            txtId.Text = table.Rows[0][0].ToString();
-                            txtName.Text = table.Rows[0][1].ToString();                            
-                            txtPhone.Text = table.Rows[0][2].ToString();
-                            txtEmail.Text = table.Rows[0][3].ToString();
-                            //img
-                            if (table.Rows[0][4] == DBNull.Value)
-                            {
-                                ptbImg.Image = ptbImg.InitialImage;
-                            }
-                            else
-                            {
-                                byte[] img = (byte[])table.Rows[0][4];
-                                MemoryStream ms = new MemoryStream(img);
-                                ptbImg.Image = Image.FromStream(ms);
-                            }
-                            //
-                            tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = true;
-                            xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = true;
+                            table = Student.findStudentById(txtIdStudent.Text);
+                            txtIdStudent.Text = table.Rows[0][0].ToString();
+    //edit here
                         }
                         catch(Exception ex)
                         {
@@ -236,101 +187,38 @@ namespace Library_Manager
                             MessageBox.Show("Không tìm thấy sinh viên", "Thất bại!");
                         }
                     }
-                    else
-                    {
-                        try
-                        {
-                            table = Student.findStudentByName(txtName.Text);
-                            txtId.Text = table.Rows[0][0].ToString();
-                            txtName.Text = table.Rows[0][1].ToString();
-                            txtPhone.Text = table.Rows[0][2].ToString();
-                            txtEmail.Text = table.Rows[0][3].ToString();
-                            //img
-                            try
-                            {
-                                if (table.Rows[0][4] == DBNull.Value)
-                                {
-                                    ptbImg.Image = ptbImg.InitialImage;
-                                }
-                                else
-                                {
-                                    byte[] img = (byte[])table.Rows[0][4];
-                                    MemoryStream ms = new MemoryStream(img);
-                                    ptbImg.Image = Image.FromStream(ms);
-                                }
-                                //
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.Message);
-                            }
-                            tsbtnDelMode.Enabled = tsbtnUpdateMode.Enabled = true;
-                            xóaToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            clear();
-                            MessageBox.Show("Không tìm thấy sinh viên \n Lỗi : " + ex.Message , "Thất bại!");
-                        }
-                    }
                     #endregion TÌM
                     break;
                 case "Thêm":
                     #region THÊM
-                    if (!IsValidEmail(txtEmail.Text))
-                    {
-                        MessageBox.Show("Email bạn đã nhập chưa hợp lệ!", "Thông báo ");
-                        break;
-                    }
-                    if ((txtEmail.TextLength * txtName.TextLength * txtPhone.TextLength * txtId.TextLength * imgLogcation.Length) == 0)
-                    {
-                        MessageBox.Show("Bạn cần điền đầy đủ thông tin cho sinh viên", "Lỗi", MessageBoxButtons.OK,MessageBoxIcon.Information);
-                    }
-                    else
-                        if (Student.insertStudent(txtId.Text, txtName.Text, txtPhone.Text, txtEmail.Text, imgLogcation))
-                            MessageBox.Show("Thêm sinh viên thành công!", "Thành công");
-                        else
-                            MessageBox.Show("Thêm sinh viên thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //if (!IsValidEmail(txtEmail.Text))
+                    //{
+                    //    MessageBox.Show("Email bạn đã nhập chưa hợp lệ!", "Thông báo ");
+                    //    break;
+                    //}
+                    //if ((txtEmail.TextLength * txtName.TextLength * txtPhone.TextLength * txtIdStudent.TextLength * imgLogcation.Length) == 0)
+                    //{
+                    //    MessageBox.Show("Bạn cần điền đầy đủ thông tin cho sinh viên", "Lỗi", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    //}
+                    //else
+                    //    if (Student.insertStudent(txtIdStudent.Text, txtName.Text, txtPhone.Text, txtEmail.Text, imgLogcation))
+                    //        MessageBox.Show("Thêm sinh viên thành công!", "Thành công");
+                    //    else
+                    //        MessageBox.Show("Thêm sinh viên thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     #endregion THÊM
                     break;
                 case "Xóa":
-                    if (MessageBox.Show("Bạn có chắc muốn xóa sinh viên?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    if (MessageBox.Show("Bạn có chắc muốn xóa thẻ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
-                        if (Student.deleteStudent(txtId.Text))
+                        if (Student.deleteStudent(txtIdStudent.Text))
                         {
-                            MessageBox.Show("Xóa sinh viên thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Xóa thẻ thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
-                            MessageBox.Show("Không xóa được sinh viên", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Không xóa được thẻ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    setAutoComplete();
                     break;
-                case "Sửa":
-                    #region SỬA
-                    if(!IsValidEmail(txtEmail.Text))
-                    {
-                        MessageBox.Show("Email bạn đã nhập chưa hợp lệ!", "Thông báo ");
-                        break;
-                    }
-                    if (MessageBox.Show("Bạn có chắc muốn sửa thông tin của sinh viên?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                    {
-                        if ((txtEmail.TextLength * txtName.TextLength * txtPhone.TextLength * txtId.TextLength) == 0 || (imgLogcation.Length == 0 && table.Rows[0][4] == DBNull.Value))
-                        {
-                            MessageBox.Show("Bạn cần điền đầy đủ thông tin cho sinh viên", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            if (!Student.updateStudent(txtId.Text, txtName.Text, txtPhone.Text, txtEmail.Text, imgLogcation))
-                                if (!Student.updateStudent(txtId.Text, txtName.Text, txtPhone.Text, txtEmail.Text, (byte[])table.Rows[0][4]))
-                                {
-                                    MessageBox.Show("Sửa sinh viên thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    break;
-                                }
-                            MessageBox.Show("Sửa sinh viên thành công!", "Thành công");
-
-                        }
-                    }
-                    break;
-                    #endregion SỬA
                 default:
                     break;
             }
@@ -346,17 +234,14 @@ namespace Library_Manager
         {
             setLabel("chưa chọn");
             setButton("", false);
-            imgLogcation = "";
+            cart.Clear();
             clear();
         }
 
         private void StudentForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((txtEmail.TextLength + txtName.TextLength + txtPhone.TextLength + txtId.TextLength) > 0)
-            {
-                if (MessageBox.Show("Có vẻ như bạn chưa hoàn thành công việc... \n\n Bạn có chắc muốn thoát?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            if (MessageBox.Show("Có vẻ như bạn chưa hoàn thành công việc... \n\n Bạn có chắc muốn thoát?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                     e.Cancel = true;
-            }
         }
 
         private void thôngTinToolStripMenuItem_Click(object sender, EventArgs e)
@@ -371,18 +256,7 @@ namespace Library_Manager
         #region RADIOBUTTON
         private void rbtnFindbyId_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbtnFindbyId.Checked)
-            {
-                txtId.Enabled = true;
-                txtId.Select();
-                txtName.Enabled = false;
-            }
-            else
-            {
-                txtId.Enabled = false;
-                txtName.Enabled = true;
-                txtName.Select();
-            }
+
         }
         #endregion RADIOBUTTON
 
@@ -399,41 +273,68 @@ namespace Library_Manager
                 }
             }
         }
-        private void VerifyInputPhone_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            for (int i = 0; i < textBox.TextLength; i++)
-            {
-                if (!char.IsDigit(textBox.Text[i]))
-                {
-                    textBox.Text = textBox.Text.Remove(i, 1);
-                    textBox.SelectionStart = i;
-                    textBox.SelectionLength = 0;
-                }
-            }
-        }
-
-        bool IsValidEmail(string email)
-        {
-            try
-            {
-                var mail = new System.Net.Mail.MailAddress(email);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void btnFullCancel_Click(object sender, EventArgs e)
         {
+            cart.Clear();
+            dtgvCart.Rows.Clear();
+            dtgvCart.Refresh();
+        }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            cart.Remove(dtgvCart.SelectedRows[0].Cells[0].Value.ToString());
+            dtgvCart.Rows.Remove(dtgvCart.SelectedRows[0]);
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (Book.haveBook(txtIdBook.Text))
+            {
+                foreach (DataGridViewRow dataGridViewRow in dtgvCart.Rows)
+                {
+                    if (dataGridViewRow.Cells[0].Value.ToString().Equals(txtIdBook.Text))
+                    {
+                        if (int.Parse(dataGridViewRow.Cells[2].Value.ToString()) + int.Parse(txtAmount.Value.ToString()) > int.Parse(Book.getBookQuantumBySerial(txtIdBook.Text)))
+                        {
+                            MessageBox.Show("Số lượng sách bạn mượn vượt quá số sách còn trong thư viện!", "Thông báo!");
+                        }
+                        else
+                        {
+                            dataGridViewRow.Cells[2].Value = int.Parse(dataGridViewRow.Cells[2].Value.ToString()) + int.Parse(txtAmount.Value.ToString());
+                        }
+                        return;
+                    }
+                }
+                dtgvCart.Rows.Add(txtIdBook.Text, Book.getBookNameBySerial(txtIdBook.Text), txtAmount.Value);
+                cart.Add(txtIdBook.Text);
+            }
+        }
+
+        private void txtIdBook_TextChanged(object sender, EventArgs e)
+        {
+            VerifyInput_TextChanged(sender, e);
+            lblQuantum.Text = Book.getBookQuantumBySerial(txtIdBook.Text);
+        }
+
+        private void rbtnFindbyIdBorrow_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnFindbyIdBorrow.Checked)
+            {
+                txtIdBorrow.Enabled = true;
+                txtIdBorrow.Select();
+                txtIdStudent.Enabled = false;
+            }
+            else
+            {
+                txtIdBorrow.Enabled = false;
+                txtIdStudent.Enabled = true;
+                txtIdStudent.Select();
+            }
         }
     }
 }

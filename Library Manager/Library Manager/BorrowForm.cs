@@ -14,7 +14,6 @@ namespace Library_Manager
 {
     public partial class BorrowFrom : DevExpress.XtraEditors.XtraForm
     {
-        List<string> cart= new List<string>();
         //Map<string, int> cart;
         DataTable table;
 
@@ -90,8 +89,10 @@ namespace Library_Manager
                     tsbtnFindMode.Enabled = tsbtnDelMode.Enabled = !status;
 
                     tìmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = !status;
+                    btnAdd.Enabled = btnCancel.Enabled = btnFullCancel.Enabled = status;
 
                     //set txt need
+                    txtIdBorrow.Text = (Borrow.getId() + 1).ToString();
                     txtIdBorrow.Enabled = false;
                     txtIdStudent.Enabled = txtIdBook.Enabled = txtAmount.Enabled = txtComment.Enabled = status;
                     //Set rbtn find
@@ -183,17 +184,20 @@ namespace Library_Manager
                             table = Borrow.findBorrowByIdStudent(txtIdStudent.Text);
                             foreach (DataRow row in table.Rows)
                             {
-                                txtIdBorrow.Text += row[0].ToString() + ", ";
-                                dtgvCart.Rows.Add(row[0], Book.getBookNameBySerial(row[1].ToString()), row[2].ToString());
+                                if(!txtIdBook.Text.Contains(row[0].ToString()))
+                                    txtIdBorrow.Text += row[0].ToString() + ", ";
+                                dtgvCart.Rows.Add(row[1], Book.getBookNameBySerial(row[1].ToString()), row[2].ToString());
+                 
                             }
-                            txtIdStudent.Text = table.Rows[0][0].ToString();
-
+                            //txtIdStudent.Text = table.Rows[0][0].ToString();
+                            xóaToolStripMenuItem.Enabled = tsbtnDelMode.Enabled = true;
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             clear();
                             MessageBox.Show("Không tìm thấy sinh viên\nLỗi : " + ex.Message, "Thất bại!");
                         }
+                        MessageBox.Show("Không tìm thấy thẻ mượn sách của sinh viên", "Thất bại!");
                     }
                     else
                     {
@@ -204,14 +208,15 @@ namespace Library_Manager
                             txtIdStudent.Text = table.Rows[0][0].ToString();
                             foreach (DataRow row in table.Rows)
                             {
-                                dtgvCart.Rows.Add(txtIdBorrow.Text, Book.getBookNameBySerial(row[1].ToString()), row[2].ToString());
+                                dtgvCart.Rows.Add(row[1].ToString(), Book.getBookNameBySerial(row[1].ToString()), row[2].ToString());
                             }
                             //edit here             
+                            xóaToolStripMenuItem.Enabled = tsbtnDelMode.Enabled = true;
                         }
                         catch (Exception ex)
                         {
                             clear();
-                            MessageBox.Show("Không tìm thấy sinh viên\nLỗi : " + ex.Message, "Thất bại!");
+                            MessageBox.Show("Không tìm thấy thẻ mượn sách của sinh viên\nLỗi : " + ex.Message, "Thất bại!");
                         }
                     }
                     #endregion TÌM
@@ -220,13 +225,47 @@ namespace Library_Manager
                     #region THÊM
                     {
                         txtIdBorrow.Text = (Borrow.getId() + 1).ToString();
+                        if (txtAmount.Value*txtIdStudent.TextLength*dtgvCart.Rows.Count*cbxBorrowTime.Text.Length == 0)
+                        {
+                            MessageBox.Show("Bạn chưa điền đủ thông tin!", "Thông báo");
+                        }
+                        else
+                        {
+                            if (Borrow.numOfBorrowCard(txtIdStudent.Text) < 5)
+                            {
+                                try
+                                {
+                                    foreach (DataGridViewRow row in dtgvCart.Rows)
+                                    {
+                                        Borrow.insertBorrow(txtIdBorrow.Text, txtIdStudent.Text, row.Cells[0].Value.ToString(), int.Parse(row.Cells[2].Value.ToString()), DateTime.Now, cbxBorrowTime.GetItemText(cbxBorrowTime.SelectedItem)[0] - '0', txtComment.Text);
+                                        
+                                    }
+                                    txtIdBook.Text = "";
+                                    txtAmount.Value = 1;
+                                    txtComment.Text = "";
+                                    lblQuantum.Text = "0";
+                                    dtgvCart.Rows.Clear();
+                                    MessageBox.Show("Tạo thành công thẻ mượn sách cho sinh viên : " + txtIdStudent.Text +"\nMã thẻ mượn : " + txtIdBorrow.Text, "Thông báo");
+                                    cbxBorrowTime.SelectedIndex = -1;
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show("Không thể tạo\nLỗi : " + ex.Message, "Thông báo");
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Bạn đã đạt giới hạn 5 phiếu mượn sách", "Thông báo");
+                            }
+                        }
                     }
                     #endregion THÊM
                     break;
                 case "Xóa":
                     if (MessageBox.Show("Bạn có chắc muốn xóa thẻ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
-                        if (Student.deleteStudent(txtIdStudent.Text))
+                        if (Borrow.deleteBorrow(txtIdBorrow.Text))
                         {
                             MessageBox.Show("Xóa thẻ thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -251,12 +290,6 @@ namespace Library_Manager
             setLabel("chưa chọn");
             setButton("", false);
             dtgvCart.Rows.Clear();
-            try
-            {
-                cart.Clear();
-            }
-            catch
-            { }
             clear();
         }
 
@@ -302,21 +335,12 @@ namespace Library_Manager
 
         private void btnFullCancel_Click(object sender, EventArgs e)
         {
-            try
-            {
-                cart.Clear();
-            }
-            catch
-            {
-
-            }
             dtgvCart.Rows.Clear();
             dtgvCart.Refresh();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            cart.Remove(dtgvCart.SelectedRows[0].Cells[0].Value.ToString());
             dtgvCart.Rows.Remove(dtgvCart.SelectedRows[0]);
         }
 
@@ -339,15 +363,20 @@ namespace Library_Manager
                         return;
                     }
                 }
+                if(int.Parse(txtAmount.Value.ToString()) > int.Parse(Book.getBookQuantumBySerial(txtIdBook.Text)))
+                {
+                    MessageBox.Show("Số lượng sách bạn mượn vượt quá số sách còn trong thư viện!", "Thông báo!");
+                    return;
+                }
                 dtgvCart.Rows.Add(txtIdBook.Text, Book.getBookNameBySerial(txtIdBook.Text), txtAmount.Value);
-                cart.Add(txtIdBook.Text);
+                //cart.Add(txtIdBook.Text);
             }
         }
 
         private void txtIdBook_TextChanged(object sender, EventArgs e)
         {
-            VerifyInput_TextChanged(sender, e);
             lblQuantum.Text = Book.getBookQuantumBySerial(txtIdBook.Text);
+            VerifyInput_TextChanged(sender, e);
         }
 
         private void rbtnFindbyIdBorrow_CheckedChanged(object sender, EventArgs e)

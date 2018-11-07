@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ComboBox comboBox1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BorrowFrom));
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
@@ -77,6 +76,9 @@
             this.txtIdBorrow = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dtgvCart = new System.Windows.Forms.DataGridView();
+            this.colSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNameOfBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
             this.txtIdBook = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -91,10 +93,7 @@
             this.label = new System.Windows.Forms.Label();
             this.lblQuantum = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.colSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNameOfBook = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbxBorrowTime = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
@@ -102,20 +101,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtgvCart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAmount)).BeginInit();
             this.SuspendLayout();
-            // 
-            // comboBox1
-            // 
-            comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] {
-            "1 tuần",
-            "2 tuần",
-            "3 tuần",
-            "4 tuần"});
-            comboBox1.Location = new System.Drawing.Point(660, 210);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new System.Drawing.Size(121, 27);
-            comboBox1.TabIndex = 72;
             // 
             // barManager1
             // 
@@ -506,6 +491,7 @@
             this.txtIdBorrow.Name = "txtIdBorrow";
             this.txtIdBorrow.Size = new System.Drawing.Size(300, 26);
             this.txtIdBorrow.TabIndex = 2;
+            this.txtIdBorrow.TextChanged += new System.EventHandler(this.VerifyInput_TextChanged);
             // 
             // label3
             // 
@@ -531,6 +517,29 @@
             this.dtgvCart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgvCart.Size = new System.Drawing.Size(570, 240);
             this.dtgvCart.TabIndex = 52;
+            // 
+            // colSerial
+            // 
+            this.colSerial.HeaderText = "Serial";
+            this.colSerial.Name = "colSerial";
+            this.colSerial.ReadOnly = true;
+            // 
+            // colNameOfBook
+            // 
+            this.colNameOfBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colNameOfBook.FillWeight = 350F;
+            this.colNameOfBook.HeaderText = "Tên sách";
+            this.colNameOfBook.Name = "colNameOfBook";
+            this.colNameOfBook.ReadOnly = true;
+            this.colNameOfBook.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // colAmount
+            // 
+            this.colAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colAmount.HeaderText = "Số lượng";
+            this.colAmount.Name = "colAmount";
+            this.colAmount.ReadOnly = true;
+            this.colAmount.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // btnAdd
             // 
@@ -680,38 +689,29 @@
             this.label8.TabIndex = 79;
             this.label8.Text = "quyển trong thư viện";
             // 
-            // colSerial
+            // cbxBorrowTime
             // 
-            this.colSerial.HeaderText = "Serial";
-            this.colSerial.Name = "colSerial";
-            this.colSerial.ReadOnly = true;
-            // 
-            // colNameOfBook
-            // 
-            this.colNameOfBook.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colNameOfBook.FillWeight = 350F;
-            this.colNameOfBook.HeaderText = "Tên sách";
-            this.colNameOfBook.Name = "colNameOfBook";
-            this.colNameOfBook.ReadOnly = true;
-            this.colNameOfBook.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // colAmount
-            // 
-            this.colAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colAmount.HeaderText = "Số lượng";
-            this.colAmount.Name = "colAmount";
-            this.colAmount.ReadOnly = true;
-            this.colAmount.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            cbxBorrowTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cbxBorrowTime.FormattingEnabled = true;
+            cbxBorrowTime.Items.AddRange(new object[] {
+            "1 tuần",
+            "2 tuần",
+            "3 tuần",
+            "4 tuần"});
+            cbxBorrowTime.Location = new System.Drawing.Point(660, 210);
+            cbxBorrowTime.Name = "cbxBorrowTime";
+            cbxBorrowTime.Size = new System.Drawing.Size(121, 27);
+            cbxBorrowTime.TabIndex = 84;
             // 
             // BorrowFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 662);
+            this.Controls.Add(this.cbxBorrowTime);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblQuantum);
             this.Controls.Add(this.label);
-            this.Controls.Add(comboBox1);
             this.Controls.Add(this.rbtnFindbyIdBorrow);
             this.Controls.Add(this.rbtnFindbyIdStudent);
             this.Controls.Add(this.btnFullCancel);
@@ -825,5 +825,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSerial;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNameOfBook;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAmount;
+        private System.Windows.Forms.ComboBox cbxBorrowTime;
     }
 }

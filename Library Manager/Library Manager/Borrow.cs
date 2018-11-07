@@ -25,41 +25,72 @@ namespace Library_Manager
             string cmd = "";
             if (id.Length > 0)
             {
-                cmd = string.Format("SELECT * FROM BORROW WHERE ID = '{0}'", id);
+                cmd = string.Format("SELECT * FROM FUNCTION_GET_BORROW({0})", id);
                 return Utility.DATABASECONNECTION.Execute(cmd);
             }
             return null;
         }
 
-        public static bool insertBorrow(string idStudent, List<string> cart, string phone, string email, string imageLoc)
+        public static DataTable findBorrowByIdStudent(string id)
         {
-            //string cmd = string.Format("SELECT ID FROM BORROW WHERE ID = '{0}'", id);
-            //if (Utility.DATABASECONNECTION.Execute(cmd).Rows.Count > 0)
-            //{
-            //    return false;
-            //}
-            //else
-            //{
-            //    try
-            //    {
-            //        byte[] img = null;
-            //        FileStream fileStream = new FileStream(imageLoc, FileMode.Open, FileAccess.Read);
-            ////        BinaryReader binaryReader = new BinaryReader(fileStream);
-            ////        img = binaryReader.ReadBytes((int)fileStream.Length);
-            ////        SqlCommand sqlCommand;
-            ////        cmd = string.Format("EXEC PROC_INSERT_BORROW " +
-            ////                            "'{0}', N'{1}', '{2}', '{3}', @img", id, name, phone, email);
-            ////        sqlCommand = new SqlCommand(cmd, Utility.DATABASECONNECTION.sqlConn);
-            ////        sqlCommand.Parameters.Add("@img", img);
-            ////        sqlCommand.ExecuteNonQuery();
-            ////    }
-            ////    catch (Exception e)
-            ////    {
-            ////        Console.WriteLine(e.Message);
-            ////    }
-            //}
+            string cmd = "";
+            if (id.Length > 0)
+            {
+                cmd = string.Format("SELECT * FROM FUNCTION_GET_STUDENT_BORROW({0})", id);
+                return Utility.DATABASECONNECTION.Execute(cmd);
+            }
+            return null;
+        }
+
+        public static int numOfBorrowCard(string id)
+        {
+            try
+            {
+                string cmd = string.Format("SELECT COUNT(*) FROM BORROW WHERE ID = {0}", id);
+                return int.Parse(Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString());
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        public static int getId()
+        {
+            try
+            {
+                string cmd = "SELECT TOP 1 ID FROM BORROW ORDER BY ID DESC";
+                return int.Parse(Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString());
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+            
+        public static bool insertBorrow(string id, string idStudent, List<string> cart, int quantum, DateTime timecreate, int borrowTime, string comment)
+        {
+            string cmd = string.Format("EXEC PROC_INSERT_BORROW {0}", id);
+            try
+            {
+                foreach (string serial in cart)
+                {
+                    //SqlCommand sqlCommand;
+                    cmd = string.Format("EXEC PROC_INSERT_BORROW_DETAIL " +
+                                        "'{0}', '{1}', '{2}', '{3}', '{4}', {5}", idStudent, serial, quantum, timecreate, borrowTime, comment);
+                    Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
+                    //sqlCommand = new SqlCommand(cmd, Utility.DATABASECONNECTION.sqlConn);
+                    //sqlCommand.Parameters.Add();
+                    //sqlCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
             return true;
         }
+
         public static bool deleteBorrow(string id)
         {
             string cmd = "";

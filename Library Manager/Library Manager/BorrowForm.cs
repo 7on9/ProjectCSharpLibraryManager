@@ -14,7 +14,7 @@ namespace Library_Manager
 {
     public partial class BorrowFrom : DevExpress.XtraEditors.XtraForm
     {
-        List<string> cart;
+        List<string> cart= new List<string>();
         //Map<string, int> cart;
         DataTable table;
 
@@ -41,13 +41,13 @@ namespace Library_Manager
             txtIdBorrow.AutoCompleteSource = AutoCompleteSource.CustomSource;
             var txtIdBorrowAutoCompleteCustomsource = new AutoCompleteStringCollection();
             txtIdBorrowAutoCompleteCustomsource.AddRange(Borrow.getBorrowId());
-            txtIdStudent.AutoCompleteCustomSource = txtIdBorrowAutoCompleteCustomsource;
+            txtIdBorrow.AutoCompleteCustomSource = txtIdBorrowAutoCompleteCustomsource;
 
             //id Book
             txtIdBook.AutoCompleteSource = AutoCompleteSource.CustomSource;
             var txtIdBookAutoCompleteCustomsource = new AutoCompleteStringCollection();
             txtIdBookAutoCompleteCustomsource.AddRange(Book.getBookSerial());
-            txtIdStudent.AutoCompleteCustomSource = txtIdBookAutoCompleteCustomsource;
+            txtIdBook.AutoCompleteCustomSource = txtIdBookAutoCompleteCustomsource;
         }
 
         private void StudentForm_Load(object sender, EventArgs e)
@@ -77,7 +77,9 @@ namespace Library_Manager
                     //Set rbtn find
                     rbtnFindbyIdBorrow.Select();
                     rbtnFindbyIdBorrow.Visible = rbtnFindbyIdStudent.Visible = true;
+                    txtIdBorrow.Enabled = true;
                     txtIdStudent.Enabled = false;
+                    btnAdd.Enabled = btnCancel.Enabled = btnFullCancel.Enabled = false;
                     break;
                 #endregion FIND
                 case "add":
@@ -112,7 +114,7 @@ namespace Library_Manager
                     tsbtnDelMode.Enabled = status;
                     tìmToolStripMenuItem.Enabled = thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = !status;
                     txtIdBook.Enabled = txtIdStudent.Enabled = txtAmount.Enabled = txtComment.Enabled = !status;
-                    //rbtnFindbyId.Select();
+                    rbtnFindbyIdBorrow.Select();
                     rbtnFindbyIdBorrow.Visible = rbtnFindbyIdStudent.Visible = false;
                     break;
             }
@@ -175,36 +177,50 @@ namespace Library_Manager
                     #region TÌM 
                     if (rbtnFindbyIdStudent.Checked)
                     {
+                        dtgvCart.Rows.Clear();
                         try
                         {
-                            table = Student.findStudentById(txtIdStudent.Text);
+                            table = Borrow.findBorrowByIdStudent(txtIdStudent.Text);
+                            foreach (DataRow row in table.Rows)
+                            {
+                                txtIdBorrow.Text += row[0].ToString() + ", ";
+                                dtgvCart.Rows.Add(row[0], Book.getBookNameBySerial(row[1].ToString()), row[2].ToString());
+                            }
                             txtIdStudent.Text = table.Rows[0][0].ToString();
-    //edit here
+
                         }
                         catch(Exception ex)
                         {
                             clear();
-                            MessageBox.Show("Không tìm thấy sinh viên", "Thất bại!");
+                            MessageBox.Show("Không tìm thấy sinh viên\nLỗi : " + ex.Message, "Thất bại!");
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            dtgvCart.Rows.Clear();
+                            table = Borrow.findBorrowById(txtIdBorrow.Text);
+                            txtIdStudent.Text = table.Rows[0][0].ToString();
+                            foreach (DataRow row in table.Rows)
+                            {
+                                dtgvCart.Rows.Add(txtIdBorrow.Text, Book.getBookNameBySerial(row[1].ToString()), row[2].ToString());
+                            }
+                            //edit here             
+                        }
+                        catch (Exception ex)
+                        {
+                            clear();
+                            MessageBox.Show("Không tìm thấy sinh viên\nLỗi : " + ex.Message, "Thất bại!");
                         }
                     }
                     #endregion TÌM
                     break;
                 case "Thêm":
                     #region THÊM
-                    //if (!IsValidEmail(txtEmail.Text))
-                    //{
-                    //    MessageBox.Show("Email bạn đã nhập chưa hợp lệ!", "Thông báo ");
-                    //    break;
-                    //}
-                    //if ((txtEmail.TextLength * txtName.TextLength * txtPhone.TextLength * txtIdStudent.TextLength * imgLogcation.Length) == 0)
-                    //{
-                    //    MessageBox.Show("Bạn cần điền đầy đủ thông tin cho sinh viên", "Lỗi", MessageBoxButtons.OK,MessageBoxIcon.Information);
-                    //}
-                    //else
-                    //    if (Student.insertStudent(txtIdStudent.Text, txtName.Text, txtPhone.Text, txtEmail.Text, imgLogcation))
-                    //        MessageBox.Show("Thêm sinh viên thành công!", "Thành công");
-                    //    else
-                    //        MessageBox.Show("Thêm sinh viên thất bại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    {
+                        txtIdBorrow.Text = (Borrow.getId() + 1).ToString();
+                    }
                     #endregion THÊM
                     break;
                 case "Xóa":
@@ -234,7 +250,13 @@ namespace Library_Manager
         {
             setLabel("chưa chọn");
             setButton("", false);
-            cart.Clear();
+            dtgvCart.Rows.Clear();
+            try
+            {
+                cart.Clear();
+            }
+            catch
+            { }
             clear();
         }
 
@@ -280,7 +302,14 @@ namespace Library_Manager
 
         private void btnFullCancel_Click(object sender, EventArgs e)
         {
-            cart.Clear();
+            try
+            {
+                cart.Clear();
+            }
+            catch
+            {
+
+            }
             dtgvCart.Rows.Clear();
             dtgvCart.Refresh();
         }

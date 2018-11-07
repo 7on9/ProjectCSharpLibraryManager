@@ -25,7 +25,7 @@ namespace Library_Manager
             string cmd = "";
             if (id.Length > 0)
             {
-                cmd = string.Format("SELECT ID FROM BOOK WHERE ID = '{0}'", id);
+                cmd = string.Format("SELECT SERIAL FROM BOOK WHERE SERIAL = '{0}'", id);
                 return Utility.DATABASECONNECTION.Execute(cmd).Rows.Count > 0 ? true : false;
             }
             return false;
@@ -184,8 +184,14 @@ namespace Library_Manager
             string cmd = "";
             if (serial.Length > 0)
             {
-                cmd = string.Format("SELECT QUANTUM FROM BOOK WHERE SERIAL = '{0}'", serial);
-                return Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString();
+                try
+                {
+                    cmd = string.Format("SELECT QUANTUM FROM BOOK WHERE SERIAL = '{0}'", serial);
+                    return Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString();
+                } catch
+                {
+
+                }
             }
             return null;
         }

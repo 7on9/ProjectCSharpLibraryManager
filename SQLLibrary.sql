@@ -205,7 +205,10 @@ GO
 --END
 ----------------------------------------------------------------------------------------------------------------------LOG----------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------ACCOUNT----------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE PROC PROC_INSERT_ACCOUNT @USER_NAME VARCHAR(65), @PASSWORD VARCHAR(65), @SUCC INT OUTPUT
+CREATE PROC PROC_INSERT_ACCOUNT 
+	@USER_NAME VARCHAR(65), 
+	@PASSWORD VARCHAR(65), 
+	@SUCC INT OUTPUT
 AS
 	BEGIN TRY
 		INSERT INTO ACCOUNT VALUES (@USER_NAME, @PASSWORD)
@@ -267,7 +270,11 @@ CREATE PROC PROC_UPDATE_BOOK
 AS
 BEGIN
 	UPDATE BOOK 
-	SET NAME = @NAME, AUTHOR = @AUTHOR, PUBLISH_HOUSE = @PUBLISH_HOUSE, QUANTUM = @QUANTUM, IMG = @IMG, TAG = @TAG
+	SET NAME = @NAME, 
+		AUTHOR = @AUTHOR, 
+		PUBLISH_HOUSE = @PUBLISH_HOUSE, 
+		QUANTUM = @QUANTUM, 
+		IMG = @IMG, TAG = @TAG
 	WHERE SERIAL = @SERIAL
 end
 GO
@@ -338,7 +345,10 @@ AS
 
 BEGIN
 	UPDATE STUDENT 
-	SET NAME = @NAME, EMAIL = @EMAIL, PHONE = @PHONE, IMG = @IMG
+	SET NAME = @NAME, 
+			EMAIL = @EMAIL,
+			PHONE = @PHONE, 
+			IMG = @IMG
 	WHERE ID = @ID
 end
 
@@ -380,21 +390,26 @@ AS
 RETURN 
 	SELECT ID FROM BORROW
 GO
+
+
+
 CREATE FUNCTION FUNCTION_GET_STUDENT_BORROW (@ID VARCHAR(15))
 RETURNS TABLE
 AS
 RETURN 
-	SELECT * 
-	FROM BORROW
-	WHERE ID = @ID
+	SELECT  BORROW.ID, SERIAL, QUANTUM
+	FROM BORROW, BORROW_DETAIL
+	WHERE BORROW_DETAIL.ID = BORROW.ID AND ID_STUDENT = @ID
 GO
+
+
 CREATE FUNCTION FUNCTION_GET_BORROW (@ID VARCHAR(15))
 RETURNS TABLE
 AS
 RETURN 
-	SELECT * 
-	FROM BORROW_DETAIL
-	WHERE ID = @ID
+	SELECT ID_STUDENT,  SERIAL, QUANTUM,TIME_CREATE, BORROW_TIME, COMMENT
+	FROM BORROW A, BORROW_DETAIL B
+	WHERE A.ID = @ID AND A.ID = B.ID
 GO
 CREATE PROC PROC_INSERT_BORROW
 	@ID_STUDENT VARCHAR(15)
@@ -454,4 +469,6 @@ BEGIN
 				DEALLOCATE CUR_BORROW_BOOK
 			END
 END
+
+SELECT TOP 1 ID FROM BORROW ORDER BY ID DESC
 ----------------------------------------------------------------------------------------------------------------------BORROW----------------------------------------------------------------------------------------------------------------------------------------------------------------

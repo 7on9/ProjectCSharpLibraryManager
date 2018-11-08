@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -55,7 +55,6 @@
             this.tiệnÍchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hướngDẫnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thôngTinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.oFDImage = new System.Windows.Forms.OpenFileDialog();
             this.timeSystem = new System.Windows.Forms.Timer(this.components);
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.lblMode = new System.Windows.Forms.ToolStripLabel();
@@ -294,10 +293,6 @@
             this.thôngTinToolStripMenuItem.Name = "thôngTinToolStripMenuItem";
             this.thôngTinToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.thôngTinToolStripMenuItem.Text = "Thông tin";
-            // 
-            // oFDImage
-            // 
-            this.oFDImage.FileName = "openFileDialog1";
             // 
             // timeSystem
             // 
@@ -611,8 +606,8 @@
             this.dgvAnalytics.Location = new System.Drawing.Point(30, 180);
             this.dgvAnalytics.Name = "dgvAnalytics";
             this.dgvAnalytics.ReadOnly = true;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAnalytics.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAnalytics.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvAnalytics.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAnalytics.Size = new System.Drawing.Size(1200, 510);
             this.dgvAnalytics.TabIndex = 65;
@@ -677,7 +672,6 @@
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem5;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem6;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.OpenFileDialog oFDImage;
         private System.Windows.Forms.Timer timeSystem;
         private DevExpress.XtraBars.BarStaticItem barStaticItem1;
         private System.Windows.Forms.ToolStrip toolStrip2;

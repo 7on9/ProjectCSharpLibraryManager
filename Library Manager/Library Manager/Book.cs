@@ -74,10 +74,12 @@ namespace Library_Manager
             {
                 try
                 {
-                    byte[] img = null;
-                    FileStream fileStream = new FileStream(imageLoc, FileMode.Open, FileAccess.Read);
-                    BinaryReader binaryReader = new BinaryReader(fileStream);
-                    img = binaryReader.ReadBytes((int)fileStream.Length);
+                    Image image = Utility.FixedSize(Image.FromFile(imageLoc), 200, 200);
+
+                    byte[] img = Utility.ImageToByteArray(image);
+                    //FileStream fileStream = new FileStream(imageLoc, FileMode.Open, FileAccess.Read);
+                    //BinaryReader binaryReader = new BinaryReader(fileStream);
+                    //img = binaryReader.ReadBytes((int)fileStream.Length);
                     SqlCommand sqlCommand;
                     cmd = string.Format("EXEC PROC_INSERT_BOOK " +
                                         "'{0}', N'{1}', N'{2}', N'{3}', {4}, @img, '{5}'", serial, name, author, ph, quantum, tag);
@@ -105,10 +107,10 @@ namespace Library_Manager
             {
                 try
                 {
-                    byte[] img = null;
-                    FileStream fileStream = new FileStream(imageLoc, FileMode.Open, FileAccess.Read);
-                    BinaryReader binaryReader = new BinaryReader(fileStream);
-                    img = binaryReader.ReadBytes((int)fileStream.Length);
+                    Image image = Utility.FixedSize(Image.FromFile(imageLoc), 200, 200);
+
+                    byte[] img = Utility.ImageToByteArray(image);
+
                     SqlCommand sqlCommand;
                     cmd = string.Format("EXEC PROC_UPDATE_BOOK " +
                                         "'{0}', N'{1}', N'{2}', N'{3}', {4}, @img, '{5}'", serial, name, author, ph, quantum, tag);

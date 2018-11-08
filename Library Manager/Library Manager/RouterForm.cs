@@ -40,22 +40,22 @@ namespace Library_Manager
 
         private void sáchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imgGoToForm_Click(sender, e);
+            imgGoToForm_Click(imgBook, e);
         }
 
         private void thẻThưViệnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imgGoToForm_Click(sender, e);
+            imgGoToForm_Click(imgUser , e);
         }
 
         private void dữLiệuHệThốngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imgGoToForm_Click(sender, e);
+            imgGoToForm_Click(imgData, e);
         }
 
         private void phiếuMượnSáchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imgGoToForm_Click(sender, e);
+            imgGoToForm_Click(imgBorrow, e);
         }
 
         private void RouterForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -100,6 +100,8 @@ namespace Library_Manager
                         studentForm.Show();
                         break;
                     case "LogForm":
+                        DataForm dataForm = new DataForm();
+                        dataForm.Show();
                         break;
                     case "BorrowForm":
                         BorrowFrom borrowFrom = new BorrowFrom();

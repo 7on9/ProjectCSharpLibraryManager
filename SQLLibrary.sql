@@ -227,6 +227,23 @@ AS
 	RETURN
 	END CATCH
 GO
+
+CREATE PROC PROC_UPDATE_ACCOUNT 
+	@USER_NAME VARCHAR(65), 
+	@PASSWORD VARCHAR(65),
+	@SUCC INT OUTPUT
+AS
+	BEGIN TRY
+		UPDATE ACCOUNT 
+		SET PASSWORD = @PASSWORD
+		WHERE USER_NAME = @USER_NAME
+		SET @SUCC = @@ROWCOUNT
+	END TRY
+	BEGIN CATCH
+		SET @SUCC = @@ROWCOUNT
+		RETURN
+	END CATCH
+GO
 --DECLARE @SUCC INT 
 --EXEC PROC_INSERT_ACCOUNT 'SSSS','SSSSS',@SUCC OUTPUT
 --SELECT STR(@SUCC, 10)
@@ -326,6 +343,10 @@ GO
 --CREATE FUNCTION FUNCTION_FIND_BOOK(@SERIAL NVARCHAR(15)
 
 --SELECT * FROM FUNCTION_BOOK_WITH_TAG('EEE')
+CREATE VIEW VIEW_ALL_BOOK
+AS
+	SELECT * FROM BOOK
+SELECT * FROM VIEW_ALL_BOOK
 ----------------------------------------------------------------------------------------------------------------------STUDENT----------------------------------------------------------------------------------------------------------------------------------------------------------------
 --DROP PROC PROC_INSERT_STUDENT
 CREATE PROC PROC_INSERT_STUDENT 
@@ -488,4 +509,11 @@ END
 
 SELECT TOP 1 ID FROM BORROW ORDER BY ID DESC
 ----------------------------------------------------------------------------------------------------------------------BORROW----------------------------------------------------------------------------------------------------------------------------------------------------------------
-delete from book where QUANTUM < 0
+SELECT GETDATE()
+----------------------------------------------------------------------------------------------------------------------DATA----------------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE VIEW VIEW_BORROW_OVER_TIME
+AS
+	SELECT A.ID [Mã phiếu], ID_STUDENT [Mã sinh viên], TIME_CREATE [Ngày tạo], BORROW_TIME [Thời gian mượn]
+	FROM BORROW A, BORROW_DETAIL B
+	WHERE A.ID = B.ID AND ((DAY(GETDATE()) - (7*BORROW_TIME)) >  (DAY(TIME_CREATE) + BORROW_TIME*7))
+----------------------------------------------------------------------------------------------------------------------DATA----------------------------------------------------------------------------------------------------------------------------------------------------------------

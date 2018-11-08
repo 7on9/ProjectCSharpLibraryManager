@@ -9,7 +9,7 @@ namespace Library_Manager
 {
     public static class SysAccount
     {
-        static string ComputeSha256Hash(string rawData)
+        public static string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   
             using (SHA256 sha256Hash = SHA256.Create())
@@ -27,6 +27,12 @@ namespace Library_Manager
             }
         }
 
+        public static bool CheckOldPass(string username, string oldPass)
+        {
+            username = username.ToUpper();
+            string cmd = string.Format("SELECT PASSWORD FROM ACCOUNT WHERE USER_NAME = '{0}'", username);
+            return (ComputeSha256Hash(oldPass) == Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString()) ? true : false;
+        }
         public static bool CreateAccount(string username, string password)
         {
             username = username.ToUpper();
@@ -42,7 +48,30 @@ namespace Library_Manager
                                    "EXEC PROC_INSERT_ACCOUNT '{0}', '{1}', @SUCC OUTPUT" +
                                    " SELECT STR(@SUCC, 10)", username, ComputeSha256Hash(password));
                 rowsCount = int.Parse(Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString());
-                if (rowsCount < 0)
+                if (rowsCount <= 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool UpdateAccount(string username, string password)
+        {
+            username = username.ToUpper();
+            string cmd = string.Format("SELECT USER_NAME FROM ACCOUNT WHERE USER_NAME = '{0}'", username);
+            int rowsCount = Utility.DATABASECONNECTION.Execute(cmd).Rows.Count;
+            if (rowsCount == 0)
+            {
+                return false;
+            }
+            else
+            {
+                cmd = string.Format("DECLARE @SUCC INT " +
+                                   "EXEC PROC_UPDATE_ACCOUNT '{0}', '{1}', @SUCC OUTPUT" +
+                                   " SELECT STR(@SUCC, 10)", username, ComputeSha256Hash(password));
+                rowsCount = int.Parse(Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString());
+                if (rowsCount <= 0)
                 {
                     return false;
                 }
@@ -68,6 +97,7 @@ namespace Library_Manager
             Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
             return true;
         }
+
         public static void LogOutAccount(string username)
         {
             string cmd = string.Format("EXEC PROC_LOGOUT_EVENT '{0}'", username);

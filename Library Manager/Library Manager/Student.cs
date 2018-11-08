@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -51,10 +52,9 @@ namespace Library_Manager
             {
                 try
                 {
-                    byte[] img = null;
-                    FileStream fileStream = new FileStream(imageLoc, FileMode.Open, FileAccess.Read);
-                    BinaryReader binaryReader = new BinaryReader(fileStream);
-                    img = binaryReader.ReadBytes((int)fileStream.Length);
+                    Image image = Utility.FixedSize(Image.FromFile(imageLoc), 200, 200);
+
+                    byte[] img = Utility.ImageToByteArray(image);
                     SqlCommand sqlCommand;
                     cmd = string.Format("EXEC PROC_INSERT_STUDENT " +
                                         "'{0}', N'{1}', '{2}', '{3}', @img", id, name, phone, email);
@@ -81,10 +81,9 @@ namespace Library_Manager
             {
                 try
                 {
-                    byte[] img = null;
-                    FileStream fileStream = new FileStream(imageLoc, FileMode.Open, FileAccess.Read);
-                    BinaryReader binaryReader = new BinaryReader(fileStream);
-                    img = binaryReader.ReadBytes((int)fileStream.Length);
+                    Image image = Utility.FixedSize(Image.FromFile(imageLoc), 200, 200);
+
+                    byte[] img = Utility.ImageToByteArray(image);
                     SqlCommand sqlCommand;
                     cmd = string.Format("EXEC PROC_UPDATE_STUDENT " +
                                         "'{0}', N'{1}', '{2}', '{3}', @img", id, name, phone, email);

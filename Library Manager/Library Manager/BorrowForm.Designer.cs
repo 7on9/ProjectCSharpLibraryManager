@@ -1,6 +1,6 @@
 ﻿namespace Library_Manager
 {
-    partial class BorrowFrom
+    partial class BorrowForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BorrowFrom));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BorrowForm));
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -93,7 +93,7 @@
             this.label = new System.Windows.Forms.Label();
             this.lblQuantum = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.cbxBorrowTime = new System.Windows.Forms.ComboBox();
+            cbxBorrowTime = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
@@ -576,7 +576,7 @@
             this.txtComment.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtComment.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtComment.Location = new System.Drawing.Point(180, 270);
-            this.txtComment.MaxLength = 15;
+            this.txtComment.MaxLength = 100;
             this.txtComment.Multiline = true;
             this.txtComment.Name = "txtComment";
             this.txtComment.Size = new System.Drawing.Size(300, 270);
@@ -703,12 +703,12 @@
             cbxBorrowTime.Size = new System.Drawing.Size(121, 27);
             cbxBorrowTime.TabIndex = 84;
             // 
-            // BorrowFrom
+            // BorrowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 662);
-            this.Controls.Add(this.cbxBorrowTime);
+            this.Controls.Add(cbxBorrowTime);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblQuantum);
             this.Controls.Add(this.label);
@@ -742,7 +742,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "BorrowFrom";
+            this.Name = "BorrowForm";
             this.Text = "Thao tác với thẻ mượn sách";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StudentForm_FormClosing);
             this.Load += new System.EventHandler(this.StudentForm_Load);

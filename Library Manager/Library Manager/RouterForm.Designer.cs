@@ -115,7 +115,7 @@
             this.imgData.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgData.TabIndex = 3;
             this.imgData.TabStop = false;
-            this.imgData.Tag = "LogForm";
+            this.imgData.Tag = "DataForm";
             this.imgData.Click += new System.EventHandler(this.imgGoToForm_Click);
             // 
             // toolTipBook

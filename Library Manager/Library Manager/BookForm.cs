@@ -93,6 +93,7 @@ namespace Library_Manager
                     txtSerial.Enabled = txtAmount.Enabled = txtAuthor.Enabled = txtPH.Enabled = txtTag.Enabled = txtName.Enabled = !status;
                     tsbtnAddMode.Enabled = tsbtnFindMode.Enabled = tsbtnUpdateMode.Enabled = !status;
                     thêmToolStripMenuItem.Enabled = tìmToolStripMenuItem.Enabled = sửaToolStripMenuItem.Enabled = txtAmount.Enabled = !status;
+                    rbtnFindbyName.Visible = rbtnFindbySerial.Visible = false;
                     break;
                     #endregion DELETE
 
@@ -102,6 +103,7 @@ namespace Library_Manager
                     btnAddImage.Enabled = btnMode.Enabled = btnReset.Enabled = tsbtnUpdateMode.Enabled = status;
                     tsbtnAddMode.Enabled = tsbtnDelMode.Enabled = tsbtnFindMode.Enabled = !status;
                     thêmToolStripMenuItem.Enabled = xóaToolStripMenuItem.Enabled = tìmToolStripMenuItem.Enabled = !status;
+                    rbtnFindbyName.Visible = rbtnFindbySerial.Visible = false;
                     break;
                 case "":
                     btnAddImage.Enabled = btnMode.Enabled = btnReset.Enabled = status;

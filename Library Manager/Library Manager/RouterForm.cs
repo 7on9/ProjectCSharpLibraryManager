@@ -60,6 +60,12 @@ namespace Library_Manager
 
         private void RouterForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if(Application.OpenForms.Count > 2)
+            {
+                MessageBox.Show("Hãy đóng tất cả cửa sổ làm việc trước khi đăng xuất!", "Thông báo");
+                e.Cancel = true;
+                return;
+            }
             if (MessageBox.Show("Bạn có chắc là muốn đăng xuất khỏi tài khoản?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
             {
                 e.Cancel = true;
@@ -89,23 +95,27 @@ namespace Library_Manager
                 }
             if (!opened)
             {
-                switch (senderForm.Tag)
+                switch ((string)senderForm.Tag)
                 {
                     case "BookForm":
                         BookForm bookForm = new BookForm();
                         bookForm.Show();
+                        opened = true;
                         break;
                     case "StudentForm":
                         StudentForm studentForm = new StudentForm();
                         studentForm.Show();
+                        opened = true;
                         break;
-                    case "LogForm":
+                    case "DataForm":
                         DataForm dataForm = new DataForm();
                         dataForm.Show();
+                        opened = true;
                         break;
                     case "BorrowForm":
-                        BorrowFrom borrowFrom = new BorrowFrom();
+                        BorrowForm borrowFrom = new BorrowForm();
                         borrowFrom.Show();
+                        opened = true;
                         break;
                 }
             }

@@ -66,15 +66,27 @@ namespace Library_Manager
                 return 0;
             }
         }
-            
-        public static bool insertBorrow(string id, string idStudent, string serial, int quantum, DateTime timecreate, int borrowTime, string comment)
+        public static int insertBorrow(string idStudent)
         {
-            string cmd = string.Format("EXEC PROC_INSERT_BORROW '{0}'", idStudent);
-            Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
+            try
+            {
+                string cmd = string.Format("EXEC PROC_INSERT_BORROW '{0}'", idStudent);
+                Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
+                cmd = "SELECT TOP 1 ID FROM BORROW ORDER BY ID DESC";
+                return int.Parse(Utility.DATABASECONNECTION.Execute(cmd).Rows[0][0].ToString());
+            }
+            catch
+            {
+                return -1;
+            }
+
+        }
+        public static bool insertBorrow(string id, string serial, int quantum, DateTime timecreate, int borrowTime, string comment)
+        {
             try
             {
                 SqlCommand sqlCommand;
-                cmd = string.Format("EXEC PROC_INSERT_BORROW_DETAIL " +
+                string cmd = string.Format("EXEC PROC_INSERT_BORROW_DETAIL " +
                                         "{0}, '{1}', '{2}', @time, '{3}', N'{4}'", id, serial, quantum, borrowTime, comment);
                 //Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
                 sqlCommand = new SqlCommand(cmd, Utility.DATABASECONNECTION.sqlConn);

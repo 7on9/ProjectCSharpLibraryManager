@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -555,7 +555,7 @@
             // 
             // txtReTypePass
             // 
-            this.txtReTypePass.Location = new System.Drawing.Point(510, 390);
+            this.txtReTypePass.Location = new System.Drawing.Point(540, 420);
             this.txtReTypePass.MaxLength = 32;
             this.txtReTypePass.Name = "txtReTypePass";
             this.txtReTypePass.PasswordChar = '*';
@@ -606,8 +606,8 @@
             this.dgvAnalytics.Location = new System.Drawing.Point(30, 180);
             this.dgvAnalytics.Name = "dgvAnalytics";
             this.dgvAnalytics.ReadOnly = true;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAnalytics.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAnalytics.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAnalytics.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAnalytics.Size = new System.Drawing.Size(1200, 510);
             this.dgvAnalytics.TabIndex = 65;

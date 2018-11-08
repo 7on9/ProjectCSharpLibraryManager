@@ -64,7 +64,9 @@ namespace Library_Manager
 
         private void btnViewLog_Click(object sender, EventArgs e)
         {
+            dgvLog.Rows.Clear();
             dgvLog.Visible = true;
+
             setButton(false);
             try
             {

@@ -12,12 +12,12 @@ using System.IO;
 
 namespace Library_Manager
 {
-    public partial class BorrowFrom : DevExpress.XtraEditors.XtraForm
+    public partial class BorrowForm : DevExpress.XtraEditors.XtraForm
     {
         //Map<string, int> cart;
         DataTable table;
 
-        public BorrowFrom()
+        public BorrowForm()
         {
             InitializeComponent();
         }
@@ -92,7 +92,7 @@ namespace Library_Manager
                     btnAdd.Enabled = btnCancel.Enabled = btnFullCancel.Enabled = status;
 
                     //set txt need
-                    txtIdBorrow.Text = (Borrow.getId() + 1).ToString();
+                    //
                     txtIdBorrow.Enabled = false;
                     txtIdStudent.Enabled = txtIdBook.Enabled = txtAmount.Enabled = txtComment.Enabled = status;
                     //Set rbtn find
@@ -146,6 +146,7 @@ namespace Library_Manager
         {
             setLabel("Thêm");
             setButton("add", true);
+            //
         }
 
         private void tsbtnDelMode_Click(object sender, EventArgs e)
@@ -224,7 +225,7 @@ namespace Library_Manager
                 case "Thêm":
                     #region THÊM
                     {
-                        txtIdBorrow.Text = (Borrow.getId() + 1).ToString();
+                        //
                         if (txtAmount.Value*txtIdStudent.TextLength*dtgvCart.Rows.Count*cbxBorrowTime.Text.Length == 0)
                         {
                             MessageBox.Show("Bạn chưa điền đủ thông tin!", "Thông báo");
@@ -233,32 +234,36 @@ namespace Library_Manager
                         {
                             if (Borrow.numOfBorrowCard(txtIdStudent.Text) < 5)
                             {
-                                try
-                                {
-                                    foreach (DataGridViewRow row in dtgvCart.Rows)
+                                if (Borrow.insertBorrow(txtIdStudent.Text) > 0)
+                                    try
                                     {
-                                        Borrow.insertBorrow(txtIdBorrow.Text, txtIdStudent.Text, row.Cells[0].Value.ToString(), int.Parse(row.Cells[2].Value.ToString()), DateTime.Now, cbxBorrowTime.GetItemText(cbxBorrowTime.SelectedItem)[0] - '0', txtComment.Text);
-                                        
+                                        txtIdBorrow.Text = (Borrow.getId()).ToString();
+                                        foreach (DataGridViewRow row in dtgvCart.Rows)
+                                        {
+                                            Borrow.insertBorrow(txtIdBorrow.Text, row.Cells[0].Value.ToString(), int.Parse(row.Cells[2].Value.ToString()), DateTime.Now, cbxBorrowTime.GetItemText(cbxBorrowTime.SelectedItem)[0] - '0', txtComment.Text);
+                                        }
+                                        txtIdBook.Text = "";
+                                        txtAmount.Value = 1;
+                                        txtComment.Text = "";
+                                        lblQuantum.Text = "0";
+                                        dtgvCart.Rows.Clear();
+                                        MessageBox.Show("Tạo thành công thẻ mượn sách cho sinh viên : " + txtIdStudent.Text + "\nMã thẻ mượn : " + txtIdBorrow.Text, "Thông báo");
+                                        cbxBorrowTime.SelectedIndex = -1;
                                     }
-                                    txtIdBook.Text = "";
-                                    txtAmount.Value = 1;
-                                    txtComment.Text = "";
-                                    lblQuantum.Text = "0";
-                                    dtgvCart.Rows.Clear();
-                                    MessageBox.Show("Tạo thành công thẻ mượn sách cho sinh viên : " + txtIdStudent.Text +"\nMã thẻ mượn : " + txtIdBorrow.Text, "Thông báo");
-                                    cbxBorrowTime.SelectedIndex = -1;
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show("Không thể tạo\nLỗi : " + ex.Message, "Thông báo");
-                                    break;
-                                }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show("Không thể tạo\nLỗi : " + ex.Message, "Thông báo");
+                                        break;
+                                    }
+                                //
+
                             }
                             else
                             {
                                 MessageBox.Show("Bạn đã đạt giới hạn 5 phiếu mượn sách", "Thông báo");
                             }
                         }
+                        setAutoComplete();
                     }
                     #endregion THÊM
                     break;

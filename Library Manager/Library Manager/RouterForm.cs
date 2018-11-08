@@ -30,7 +30,12 @@ namespace Library_Manager
         
         private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            foreach (Form form in Application.OpenForms)
+                if (form.Name == "RouterForm")
+                {
+                    form.Close();
+                    break;
+                }
         }
 
         private void timeSystem_Tick(object sender, EventArgs e)
@@ -87,7 +92,7 @@ namespace Library_Manager
             PictureBox senderForm = (PictureBox)sender;
             bool opened = false;
             foreach (Form form in Application.OpenForms)
-                if (form.Name == senderForm.Tag)
+                if (form.Name == (string)senderForm.Tag)
                 {
                     opened = true;
                     form.Show();
@@ -119,6 +124,11 @@ namespace Library_Manager
                         break;
                 }
             }
+        }
+
+        private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

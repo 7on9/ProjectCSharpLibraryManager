@@ -407,5 +407,15 @@ namespace Library_Manager
         {
             Application.Exit();
         }
+
+        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+                if (form.Name == "RouterForm")
+                {
+                    form.Close();
+                    break;
+                }
+        }
     }
 }

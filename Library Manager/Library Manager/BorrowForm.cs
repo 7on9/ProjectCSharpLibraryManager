@@ -198,7 +198,7 @@ namespace Library_Manager
                             clear();
                             MessageBox.Show("Không tìm thấy sinh viên\nLỗi : " + ex.Message, "Thất bại!");
                         }
-                        MessageBox.Show("Không tìm thấy thẻ mượn sách của sinh viên", "Thất bại!");
+                        //MessageBox.Show("Không tìm thấy thẻ mượn sách của sinh viên", "Thất bại!");
                     }
                     else
                     {
@@ -255,8 +255,6 @@ namespace Library_Manager
                                         MessageBox.Show("Không thể tạo\nLỗi : " + ex.Message, "Thông báo");
                                         break;
                                     }
-                                //
-
                             }
                             else
                             {
@@ -398,6 +396,16 @@ namespace Library_Manager
                 txtIdStudent.Enabled = true;
                 txtIdStudent.Select();
             }
+        }
+
+        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+                if (form.Name == "RouterForm")
+                {
+                    form.Close();
+                    break;
+                }
         }
     }
 }

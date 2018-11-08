@@ -15,7 +15,7 @@ namespace Library_Manager
     public partial class DataForm : DevExpress.XtraEditors.XtraForm
     {
         string imgLogcation = "";
-        DataTable table;
+        //DataTable table;
 
         public DataForm()
         {
@@ -221,6 +221,16 @@ namespace Library_Manager
         {
             setButton(false);
             dgvLog.Visible = false;
+        }
+
+        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+                if (form.Name == "RouterForm")
+                {
+                    form.Close();
+                    break;
+                }
         }
     }
 }

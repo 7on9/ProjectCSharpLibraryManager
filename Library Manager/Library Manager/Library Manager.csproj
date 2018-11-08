@@ -116,12 +116,6 @@
       <DependentUpon>BookForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseConnection.cs" />
-    <Compile Include="LibraryManagerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LibraryManagerForm.Designer.cs">
-      <DependentUpon>LibraryManagerForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SysAccount.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -139,12 +133,6 @@
       <DependentUpon>RouterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility.cs" />
-    <Compile Include="XtraReport1.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="XtraReport1.Designer.cs">
-      <DependentUpon>XtraReport1.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="BorrowForm.resx">
       <DependentUpon>BorrowForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,9 +144,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BookForm.resx">
       <DependentUpon>BookForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LibraryManagerForm.resx">
-      <DependentUpon>LibraryManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -176,9 +161,6 @@
     </Compile>
     <EmbeddedResource Include="RouterForm.resx">
       <DependentUpon>RouterForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XtraReport1.resx">
-      <DependentUpon>XtraReport1.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">

@@ -163,7 +163,7 @@ namespace Library_Manager
                 cmd = string.Format("EXEC PROC_DELETE_BOOK {0}", serial);
                 Utility.DATABASECONNECTION.ExecuteNonQuery(cmd);
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }

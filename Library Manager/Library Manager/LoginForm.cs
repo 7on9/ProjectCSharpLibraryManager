@@ -12,7 +12,7 @@ namespace Library_Manager
 {
     public partial class LoginForm : DevExpress.XtraEditors.XtraForm
     {
-        Thread thread;
+        //Thread thread;
         public LoginForm()
         {
             InitializeComponent();

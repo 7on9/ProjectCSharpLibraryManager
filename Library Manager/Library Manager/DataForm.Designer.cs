@@ -223,14 +223,14 @@
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             this.đăngXuấtToolStripMenuItem.Click += new System.EventHandler(this.đăngXuấtToolStripMenuItem_Click);
             // 
             // thoátToolStripMenuItem
             // 
             this.thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
-            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.thoátToolStripMenuItem.Text = "Thoát";
             this.thoátToolStripMenuItem.Click += new System.EventHandler(this.thoátToolStripMenuItem_Click);
             // 
@@ -284,7 +284,7 @@
             // thôngTinToolStripMenuItem
             // 
             this.thôngTinToolStripMenuItem.Name = "thôngTinToolStripMenuItem";
-            this.thôngTinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thôngTinToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.thôngTinToolStripMenuItem.Text = "Thông tin";
             // 
             // timeSystem
@@ -582,7 +582,9 @@
             this.cbxAnalytics.FormattingEnabled = true;
             this.cbxAnalytics.Items.AddRange(new object[] {
             "Xem các thẻ mượn sách quá hạn",
-            "Xem số lượng sách trong kho"});
+            "Xem số lượng sách trong kho",
+            "Xem toàn bộ sinh viên",
+            "Xem tất cả các phiếu mượn sách"});
             this.cbxAnalytics.Location = new System.Drawing.Point(30, 150);
             this.cbxAnalytics.Name = "cbxAnalytics";
             this.cbxAnalytics.Size = new System.Drawing.Size(300, 27);

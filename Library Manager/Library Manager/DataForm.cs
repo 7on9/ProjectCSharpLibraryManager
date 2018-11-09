@@ -213,6 +213,20 @@ namespace Library_Manager
 
                     }
                     break;
+                case 2:
+                    {
+                        dgvAnalytics.AutoGenerateColumns = true;
+                        dgvAnalytics.DataSource = Data.ViewAllStudent();
+
+                    }
+                    break;
+                case 3:
+                    {
+                        dgvAnalytics.AutoGenerateColumns = true;
+                        dgvAnalytics.DataSource = Data.ViewBorrowOverTime();
+
+                    }
+                    break;
             }
 
         }

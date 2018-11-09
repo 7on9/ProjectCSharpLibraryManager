@@ -1,6 +1,6 @@
 ﻿USE master
 GO
-DROP DATABASE LIBRARY
+--DROP DATABASE LIBRARY
 GO 
 CREATE DATABASE LIBRARY
 GO
@@ -45,15 +45,15 @@ CREATE TABLE LOG(
 		ACTION NVARCHAR(100),
 		TIME_CREATE DATETIME
 )
-
+go
 ALTER TABLE BORROW
 ADD CONSTRAINT FK_STUDENT_BORROW
 FOREIGN KEY (ID_STUDENT) REFERENCES STUDENT(ID) ON UPDATE CASCADE;
-
+go
 ALTER TABLE BORROW_DETAIL
 ADD CONSTRAINT FK_BORROW
 FOREIGN KEY (ID) REFERENCES BORROW(ID);
-
+go
 ALTER TABLE BORROW_DETAIL
 ADD CONSTRAINT FK_BOOKBORROW
 FOREIGN KEY (SERIAL) REFERENCES BOOK(SERIAL) ON UPDATE CASCADE;
@@ -169,6 +169,7 @@ BEGIN
 			DEALLOCATE CUR_BORROW_BOOK
 		END
 END
+go
 CREATE  TRIGGER TRIG_UPDATE_LOG_BORROW ON BORROW
 FOR DELETE
 AS
@@ -188,6 +189,8 @@ AS
 		SET @USER_NAME = CONCAT('LOGIN WITH USER NAME ', @USER_NAME)
 		EXEC PROC_INSERT_LOG_EVENT @USER_NAME
 	END
+
+go
 CREATE PROC PROC_LOGOUT_EVENT @USER_NAME VARCHAR(65)
 AS
 	BEGIN
@@ -277,6 +280,7 @@ AS
 BEGIN
 	INSERT INTO BOOK VALUES(@SERIAL, @NAME, @AUTHOR,@PUBLISH_HOUSE, @QUANTUM, @IMG, @TAG)
 end
+
 GO
 CREATE PROC PROC_UPDATE_BOOK 
 	@SERIAL VARCHAR(15), 
@@ -337,10 +341,6 @@ GO
 --CREATE FUNCTION FUNCTION_FIND_BOOK(@SERIAL NVARCHAR(15)
 
 --SELECT * FROM FUNCTION_BOOK_WITH_TAG('EEE')
-CREATE VIEW VIEW_ALL_BOOK
-AS
-	SELECT * FROM BOOK
-SELECT * FROM VIEW_ALL_BOOK
 ----------------------------------------------------------------------------------------------------------------------STUDENT----------------------------------------------------------------------------------------------------------------------------------------------------------------
 --DROP PROC PROC_INSERT_STUDENT
 CREATE PROC PROC_INSERT_STUDENT 
@@ -434,13 +434,16 @@ RETURN
 	FROM BORROW A, BORROW_DETAIL B
 	WHERE A.ID = @ID AND A.ID = B.ID
 GO
+
 CREATE PROC PROC_INSERT_BORROW
 	@ID_STUDENT VARCHAR(15)
 	AS
 	INSERT INTO BORROW VALUES (@ID_STUDENT)  
 GO
-CREATE PROC PROC_DELETE_BORROW
-	@ID VARCHAR(15)
+GO
+--SHIRONEKO--
+CREATE  PROC PROC_DELETE_BORROW
+	@ID INT
 	AS
 	BEGIN
 		DELETE BORROW_DETAIL 
@@ -449,8 +452,9 @@ CREATE PROC PROC_DELETE_BORROW
 			WHERE @ID  = ID
 	END 
 GO
+--SHIRONEKO--
 CREATE PROC PROC_INSERT_BORROW_DETAIL
-	@ID VARCHAR(15),
+	@ID INT,
 	@SERIAL VARCHAR(15),
 	@QUANTUM INT,
 	@TIME_CREATE DATETIME,
@@ -460,7 +464,9 @@ CREATE PROC PROC_INSERT_BORROW_DETAIL
 	INSERT INTO BORROW_DETAIL 
 		VALUES (@ID, @SERIAL, @QUANTUM, @TIME_CREATE, @BORROW_TIME, @COMMENT)
 GO
-CREATE alter TRIGGER TRIG_UPDATE_QUANTUM ON BORROW_DETAIL
+--exec PROC_INSERT_BORROW_DETAIL 57, 'FN03', 2, '1/8/2017', 1, 'edasdas'
+go
+CREATE TRIGGER TRIG_UPDATE_QUANTUM ON BORROW_DETAIL
 FOR INSERT, DELETE, UPDATE
 AS
 BEGIN
@@ -497,13 +503,31 @@ BEGIN
 			DEALLOCATE CUR_BORROW_BOOK
 		END
 END
-
-SELECT * FROM BORROW ORDER BY ID DESC
+GO
 ----------------------------------------------------------------------------------------------------------------------BORROW----------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------DATA----------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE alter VIEW VIEW_BORROW_OVER_TIME
+GO
+--SHIRONEKO--
+CREATE VIEW VIEW_BORROW_OVER_TIME
 AS
 	SELECT A.ID [Mã phiếu], ID_STUDENT [Mã sinh viên], TIME_CREATE [Ngày tạo], BORROW_TIME [Thời gian mượn]
 	FROM BORROW A, BORROW_DETAIL B
-	WHERE A.ID = B.ID AND ((DAY(GETDATE()) - (7*BORROW_TIME)) >  (DAY(TIME_CREATE)))
+	WHERE A.ID = B.ID AND ((GETDATE()) - (7*BORROW_TIME)) >  (DAY(TIME_CREATE))
+GO
+CREATE VIEW VIEW_ALL_BOOK
+AS
+	SELECT SERIAL [Mã sách], NAME [Tên sách], AUTHOR [Tác giả], PUBLISH_HOUSE [Nhà xuất bản], QUANTUM [Số lượng], IMG [Hình ảnh], TAG [Thể loại]	
+	FROM BOOK
+GO
+CREATE  VIEW VIEW_ALL_STUDENT
+AS
+	SELECT ID [Mã sinh viên], NAME [Họ và Tên], PHONE [Số điện thoại], EMAIL [Địa chỉ email], IMG [Hình ảnh]	
+	FROM STUDENT
+GO
+CREATE VIEW VIEW_ALL_BORROW_CARD
+AS
+	SELECT A.ID [Mã phiếu], ID_STUDENT [Tên sinh viên] ,[Ngày hết hạn] = ( day(7*BORROW_TIME) + (TIME_CREATE))	
+	FROM BORROW A, BORROW_DETAIL B
+	WHERE A.ID = B.ID
+	GROUP BY a.ID, ID_STUDENT, ( day(7*BORROW_TIME) + (TIME_CREATE))	
 ----------------------------------------------------------------------------------------------------------------------DATA----------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -43,6 +43,27 @@ namespace Library_Manager
                 return null;
             }
         }
-        
+        public static DataTable ViewAllStudent()
+        {
+            try
+            {
+                return Utility.DATABASECONNECTION.Execute("SELECT * FROM VIEW_ALL_STUDENT");
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public static DataTable ViewAllBorrowCard()
+        {
+            try
+            {
+                return Utility.DATABASECONNECTION.Execute("SELECT * FROM VIEW_ALL_BORROW_CARD");
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

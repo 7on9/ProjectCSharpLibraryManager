@@ -223,7 +223,7 @@ namespace Library_Manager
                 case 3:
                     {
                         dgvAnalytics.AutoGenerateColumns = true;
-                        dgvAnalytics.DataSource = Data.ViewBorrowOverTime();
+                        dgvAnalytics.DataSource = Data.ViewAllBorrowCard();
 
                     }
                     break;

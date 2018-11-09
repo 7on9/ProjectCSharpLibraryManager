@@ -524,6 +524,7 @@ AS
 	SELECT ID [Mã sinh viên], NAME [Họ và Tên], PHONE [Số điện thoại], EMAIL [Địa chỉ email], IMG [Hình ảnh]	
 	FROM STUDENT
 GO
+
 CREATE VIEW VIEW_ALL_BORROW_CARD
 AS
 	SELECT A.ID [Mã phiếu], ID_STUDENT [Tên sinh viên] ,[Ngày hết hạn] = ( day(7*BORROW_TIME) + (TIME_CREATE))	
